@@ -1,0 +1,33 @@
+body {
+  font-family: 'Proxima Nova'; }
+
+.wrapper {
+  width: 960px;
+  margin: 50px auto; }
+
+nav {
+  background-color: #f4f4f4;
+  width: 100%; }
+  nav .wrapper {
+    margin: 0px auto; }
+
+nav ul {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px; }
+  nav ul li {
+    display: inline-block;
+    padding: 10px 10px; }
+
+.login-form {
+  width: 640px; }
+  .login-form .input-group {
+    margin-bottom: 15px;
+    min-width: 100%;
+    display: block; }
+    .login-form .input-group .form-control {
+      float: none; }
+    .login-form .input-group input {
+      display: block; }
+    .login-form .input-group label {
+      display: block; }

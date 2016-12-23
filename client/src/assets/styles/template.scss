@@ -1,0 +1,51 @@
+body {
+	font-family: 'Proxima Nova';
+}
+
+.wrapper {
+	width: 960px;
+	margin: 50px auto;
+}
+
+nav {
+	background-color: #f4f4f4;
+	width: 100%;
+
+	.wrapper {
+		margin: 0px auto;
+	}
+}
+
+nav ul {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+
+	li {
+		display: inline-block;
+		padding: 10px 10px;
+	}
+}
+
+
+.login-form {
+	width: 640px;
+
+	.input-group {
+		margin-bottom: 15px;
+		min-width: 100%;
+		display: block;
+
+     .form-control {
+        float: none;
+     }
+
+     input {
+        display: block;
+     }
+
+		label {
+			display: block;
+		}
+	}
+}
