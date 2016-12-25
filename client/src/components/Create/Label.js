@@ -1,5 +1,6 @@
 import React from 'react'
 import PlainEditable from 'react-plain-editable'
+import cloudinary from 'cloudinary'
 
 export default class Label extends React.Component {
 
@@ -25,6 +26,10 @@ export default class Label extends React.Component {
     const id = this.props.id
     const design = this.props.design
     const borders = this.props.design.borders
+
+    if (design.backgroundImage !== "") {
+    design.backgroundImage = cloudinary.url(design.backgroundImage, { aspect_ratio: 1, crop: "fill" })
+    }
 
     const textStyles = { fontFamily: design.fontFamily, 
                          fontSize: design.fontSize,
@@ -138,16 +143,18 @@ export default class Label extends React.Component {
               }
               {design.shape === 5 &&
                 <svg width={`${design.width}mm`} height={`${design.width}mm`} viewBox="0 0 100 100">
+
                   <defs>
                     <pattern id="img1" patternUnits="userSpaceOnUse" width="100" height="100">
                       <image 
-                        href="http://www.pngall.com/wp-content/uploads/2016/03/Leaves-PNG-HD.png" 
+                        href={design.backgroundImage} 
                         x="0" 
                         y="0" 
                         width="100"
                         height="100" />
                     </pattern>
                   </defs>
+
                   {/* BACKGROUND COLOR SHAPE */}
                   <polygon 
                     fill={design.backgroundColor}
@@ -158,9 +165,10 @@ export default class Label extends React.Component {
   74.659,84.172 70.152,90.143 62.671,90.279 56.54,94.565 49.384,92.384 42.229,94.565 36.097,90.279 28.617,90.143 24.109,84.172 
   17.038,81.73 14.597,74.658 8.625,70.152 8.489,62.672 4.203,56.54 6.384,49.384 4.203,42.228 8.489,36.097 8.625,28.617 
   14.597,24.109 17.038,17.038 24.109,14.597 28.617,8.625 36.097,8.489 42.229,4.203 "/>
+
                   {/* BACKGROUND IMAGE SHAPE */}
                   <polygon 
-                    fill="url(#img1)"
+                    fill={design.backgroundImage === "" ? design.backgroundColor : "url(#img1)"}
                     stroke={design.borders[0].borderColor} 
                     strokeWidth={design.borders[0].borderWidth}
                     points="49.384,6.384 56.54,4.203 62.671,8.489 70.152,8.625 74.659,14.597 81.731,17.038 84.171,24.109 
@@ -168,6 +176,21 @@ export default class Label extends React.Component {
   74.659,84.172 70.152,90.143 62.671,90.279 56.54,94.565 49.384,92.384 42.229,94.565 36.097,90.279 28.617,90.143 24.109,84.172 
   17.038,81.73 14.597,74.658 8.625,70.152 8.489,62.672 4.203,56.54 6.384,49.384 4.203,42.228 8.489,36.097 8.625,28.617 
   14.597,24.109 17.038,17.038 24.109,14.597 28.617,8.625 36.097,8.489 42.229,4.203 "/>
+
+                  {/* TEXT */}
+                  <text 
+                    textAnchor="middle" 
+                    alignmentBaseline="central"
+                    dominantBaseline="middle"
+                    x="50" 
+                    y="52" 
+                    fill={design.textColor}
+                    fontFamily={design.fontFamily}
+                    fontSize={design.fontSize}
+                    textTransform={design.textTransform}
+                    letterSpacing={design.letterSpacing}>
+                      {name}
+                  </text>
                 </svg>
               }
               {design.shape === 6 &&
@@ -198,9 +221,11 @@ export default class Label extends React.Component {
             
               {/*<div className="label-shape" style={ shapeStyles }></div> */}
           </div>
+          { /*
           <div className="label-text" style={ textStyles }>
             <PlainEditable onClick={this.props.openTextPanel} onBlur={this.props.changeNameHandler} value={name} />
           </div>
+          */ }
         </div>
       </div>
 

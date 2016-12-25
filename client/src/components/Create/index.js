@@ -19,7 +19,7 @@ class Create extends Component {
       openPanel: '1',
       zoom: 1,
       design: {
-        shape: 1,
+        shape: 5,
         fontFamily: 'Proxima Nova',
         fontSize: 18,
         letterSpacing: '0',
@@ -28,7 +28,6 @@ class Create extends Component {
         textDecoration: 'none',
         fontStyle: 'normal',
         textTransform: 'none',
-
         borders: [
           {id: 1,
           borderWidth: 10,
@@ -39,7 +38,6 @@ class Create extends Component {
           borderStyle: 'solid',
           borderColor: '#333'}
         ],
-
         width: 50,
         height: 50,
         backgroundColor: '#333',
@@ -67,6 +65,7 @@ class Create extends Component {
     this.changeShape = this.changeShape.bind(this)
     this.changeBorderValue = this.changeBorderValue.bind(this)
     this.changeProjectSettings = this.changeProjectSettings.bind(this)
+    this.changeBackgroundImage = this.changeBackgroundImage.bind(this)
   }
 
   // Add label to the page
@@ -191,6 +190,16 @@ class Create extends Component {
         }
     }
     this.setState({ design: design })
+  }
+
+// Background image
+
+  changeBackgroundImage(imageId) {
+    var design = this.state.design
+    design.backgroundImage = imageId
+    this.setState({
+      design: design
+    })
   }
 
 // Print document
@@ -364,8 +373,6 @@ class Create extends Component {
               <textarea className="form-control" name="description" value={this.state.description} onChange={this.changeProjectSettings}></textarea>
             </div>
 
-            { cloudinary.image("sample.jpg", { width: 100, height: 150, crop: "fill" }) }
-
             <div className="form-group">
               <label>Visibility</label>
               <select id="visibility" className="form-control">
@@ -435,8 +442,40 @@ class Create extends Component {
           <Panel header="Style" eventKey="3">
 
             <div className="form-group">
-              <label>Background</label><br/>
+              <label>Background color</label><br/>
               <PopupColorPicker color={ this.state.design.backgroundColor } changeHandler={ this.handleColorChange.bind(this, 'backgroundColor') } />
+            </div>
+
+            <div className="form-group">
+              <label>Background image</label><br/>
+
+              <div className="bg-image-options">
+                <img 
+                  className="bg-image-option"
+                  src={ cloudinary.url("defaultBackgrounds/01", { width: 70, height: 70, crop: "fill" }) } 
+                  role="presentation"
+                  onClick={ this.changeBackgroundImage.bind(this, 'defaultBackgrounds/01') } />
+
+                <img 
+                  className="bg-image-option"
+                  src={ cloudinary.url("defaultBackgrounds/02", { width: 70, height: 70, crop: "fill" }) } 
+                  role="presentation"
+                  onClick={ this.changeBackgroundImage.bind(this, 'defaultBackgrounds/02') } />
+
+                <img 
+                  className="bg-image-option"
+                  src={ cloudinary.url("defaultBackgrounds/03", { width: 70, height: 70, crop: "fill" }) } 
+                  role="presentation"
+                  onClick={ this.changeBackgroundImage.bind(this, 'defaultBackgrounds/03') } />
+
+                <img 
+                  className="bg-image-option"
+                  src={ cloudinary.url("defaultBackgrounds/04", { width: 70, height: 70, crop: "fill" }) } 
+                  role="presentation"
+                  onClick={ this.changeBackgroundImage.bind(this, 'defaultBackgrounds/04') } />
+
+              </div>
+
             </div>
 
             <label>Border</label>
@@ -459,12 +498,12 @@ class Create extends Component {
                               </select>
                             </div>
                             <div className="flex-input-item">
-                              {index === (array.length - 1) &&
+                              {index >= 1 &&
                                 <div className="border-button">
                                   <span className="lnr lnr-plus-circle" onClick={this.addBorder}></span>
                                 </div>
                               }
-                              {index !== (array.length - 1) &&
+                              {index >= 2 &&
                                 <div className="border-button">
                                   <span className="lnr lnr-trash" onClick={this.deleteBorder.bind(this, border.id)}></span>
                                 </div>

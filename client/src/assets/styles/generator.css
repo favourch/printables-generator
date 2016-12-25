@@ -107,7 +107,7 @@ a {
   -webkit-box-shadow: 5px 5px 10px -2px rgba(0, 0, 0, 0.29);
   -moz-box-shadow: 5px 5px 10px -2px rgba(0, 0, 0, 0.29);
   box-shadow: 5px 5px 10px -2px rgba(0, 0, 0, 0.29);
-  padding: 50px;
+  padding: 6.35mm;
   box-sizing: border-box;
   transform-origin: top center; }
 
@@ -170,6 +170,26 @@ a {
 
 #add-label p {
   margin-top: 5px; }
+
+.bg-image-option {
+  cursor: pointer;
+  padding: 5px;
+  margin: 3px;
+  background: #fff;
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  transition: 0.2s;
+  display: inline-block; }
+
+.bg-image-option:nth-child(3n-2) {
+  margin-left: 0px; }
+
+.bg-image-option:nth-child(3n) {
+  margin-right: 0px; }
+
+.bg-image-option:hover {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+  transition: 0.2s; }
 
 .profile-picture {
   width: 40px;
@@ -414,16 +434,14 @@ label {
   .workcontent {
     margin-left: 0px;
     width: 210mm;
-    top: 0px;
-    border: 1px solid red; }
+    top: 0px; }
   .canvas {
-    width: 210mm;
-    height: 297mm;
+    width: 100%;
+    height: auto;
     margin: 0px;
     position: relative;
     top: 0px;
-    padding: 0px;
-    border: 2px solid blue; }
+    padding: 0px; }
   #add-label {
     display: none; }
   .designed-label .label-text span {
