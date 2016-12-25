@@ -16,11 +16,11 @@ class Navigation extends Component {
 	          <Navbar.Collapse>
 	            <Nav>
 	              <li><Link to="/" activeClassName="active">Home</Link></li>
-	              <li><Link to="browse" activeClassName="active">Browse designs</Link></li>
-	              <li><Link to="my-designs" activeClassName="active">My designs</Link></li>
-	              <li><Link to="create" activeClassName="active">Create new design</Link></li>
-	              <li><Link to="register" activeClassName="active">Register</Link></li>
-	              <li><Link to="login" activeClassName="active">Login</Link></li>
+	              <li><Link to="/browse" activeClassName="active">Browse designs</Link></li>
+	              <li><Link to="/my-designs" activeClassName="active">My designs</Link></li>
+	              <li><Link to="/create" activeClassName="active">Create new design</Link></li>
+	              <li><Link to="/register" activeClassName="active">Register</Link></li>
+	              <li><Link to="/login" activeClassName="active">Login</Link></li>
 	            </Nav>
 	            <Nav pullRight>
 	              <div className="profile-picture"></div>

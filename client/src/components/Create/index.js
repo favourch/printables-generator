@@ -4,8 +4,8 @@ import { PanelGroup, Panel } from 'react-bootstrap'
 import Label from './Label'
 import PopupColorPicker from './PopupColorPicker'
 import { SquareShape, CircleShape, EllipseShape, RectangleShape, BadgeShape, LabelShape } from './Shapes'
-import { sampleLabels, daysOfMonth } from './sampleData.js'
 import cloudinary from 'cloudinary'
+import axios from 'axios'
 
 class Create extends Component {
 
@@ -21,7 +21,8 @@ class Create extends Component {
       design: {
         shape: 5,
         fontFamily: 'Proxima Nova',
-        fontSize: 18,
+        fontSize: 12,
+        fontWeight: 300,
         letterSpacing: '0',
         textColor: '#fff',
         textAlign: 'center',
@@ -30,25 +31,20 @@ class Create extends Component {
         textTransform: 'none',
         borders: [
           {id: 1,
-          borderWidth: 10,
+          borderWidth: 2,
           borderStyle: 'solid',
           borderColor: '#ddd'},
           {id: 2,
-          borderWidth: 10,
+          borderWidth: 6,
           borderStyle: 'solid',
           borderColor: '#333'}
         ],
-        width: 50,
-        height: 50,
+        width: 47,
+        height: 47,
         backgroundColor: '#333',
         backgroundImage: '',
       },
-      labels: sampleLabels,
-      calendar: {
-        days: daysOfMonth,
-        month: 'December',
-        year: 2016
-      },
+      labels: [],
       selected: []
     }
 
@@ -67,6 +63,42 @@ class Create extends Component {
     this.changeProjectSettings = this.changeProjectSettings.bind(this)
     this.changeBackgroundImage = this.changeBackgroundImage.bind(this)
   }
+
+
+  componentDidMount() {
+
+    const designId = this.props.params.designId
+    console.log('Compunent mounted')
+    console.log(designId)
+
+    if (typeof designId !== "undefined") {
+      axios.get('/api/design/'+designId)
+      .then(response => {
+        console.log(response)
+        this.setState({
+            _id: response.data._id,
+            title: response.data.title,
+            description: response.data.description,
+            design: response.data.design, 
+            labels: response.data.labels,
+            visibility: response.data.visibility
+        })
+      })
+      .catch(console.error);
+    }
+
+    // Get users list from the api
+    // axios.get('/api/users')
+    //   .then(response => {
+    //     this.setState({
+    //         users: response.data
+    //     })
+    //   })
+    //   .catch(console.error);
+
+  }
+
+  
 
   // Add label to the page
 
@@ -326,6 +358,35 @@ class Create extends Component {
     })
   }
 
+// Save the design
+
+  saveDesign() {
+    console.log('Save design')
+
+    const design = {
+      title: this.state.title,
+      description: this.state.description,
+      visibility: this.state.visibility,
+      design: this.state.design,
+      labels: this.state.labels
+    }
+
+    if (typeof this.state._id !== "undefined") {
+      design._id = this.state._id
+    }
+
+    console.log('Design')
+    console.log(design)
+
+    axios.post('/api/design/save', design)
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
   render() {
 
     return (
@@ -549,6 +610,17 @@ class Create extends Component {
               </div>
               <div className="col-md-6">
                 <div className="form-group">
+                  <label>Font weight</label>
+                  <select className="form-control" name="fontWeight" value={this.state.design.fontWeight} onChange={this.changeValue}>
+                    <option value="100">Ultra light</option>
+                    <option value="300">Light</option>
+                    <option value="400">Normal</option>
+                    <option value="600">Bold</option>
+                    <option value="800">Black</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
                   <label>Letter spacing</label><br/>
                   <div className="input-group">
                     <input type="number" className="form-control" aria-describedby="basic-addon2" name="letterSpacing" value={this.state.design.letterSpacing} onChange={this.changeValue} />
@@ -616,63 +688,40 @@ class Create extends Component {
           <button className="btn btn-primary" onClick={() => this.zoomOut()}><span className="lnr lnr-circle-minus"></span></button>
 
           <div className="pull-right">
-            <button className="btn btn-primary"><span className="lnr lnr-cloud-upload"></span> Save</button>
+            <button className="btn btn-primary" onClick={() => this.saveDesign()}><span className="lnr lnr-cloud-upload"></span> Save</button>
             <button className="btn btn-primary printButton" onClick={this.printDocument}><span className="lnr lnr-printer"></span>  Print</button>
             <button className="btn btn-primary"><span className="lnr lnr-download"></span> Download</button>
           </div>
         </div>
 
         <div className="canvas" style={{ transform: 'scale('+this.state.zoom+','+this.state.zoom+')' }}>
-          <div className="canvas-grid">
-
-            { /*
-            <div className="calendar">
-              <div className="calendar-header">
-                <div className="calendar-title"><span contentEditable={true}>December</span></div>
-              </div>
-              <div className="calendar-days-names">
-                <div className="day"><span contentEditable={true}>Monday</span></div>
-                <div className="day"><span contentEditable={true}>Tuesday</span></div>
-                <div className="day"><span contentEditable={true}>Wednesday</span></div>
-                <div className="day"><span contentEditable={true}>Thursday</span></div>
-                <div className="day"><span contentEditable={true}>Friday</span></div>
-                <div className="day"><span contentEditable={true}>Saturday</span></div>
-                <div className="day"><span contentEditable={true}>Sunday</span></div>
-              </div>
-              <div className="calendar-days">
+          <div className="canvas-printable">
+            <div className="canvas-grid">
 
               {
-                this.state.calendar.days.map((day) => {
-                    return <div className="day"><span contentEditable={true}>{day}</span></div>
+                this.state.labels.map((label) => {
+                  return <Label 
+                            key={label.id}
+                            id={label.id} 
+                            name={label.name} 
+                            design={this.state.design}
+                            changeNameHandler={this.changeLabelName.bind(this, label.id)}
+                            openTextPanel={() => this.changeOpenPanel('3')}
+                            openLabelPanel={() => this.changeOpenPanel('2')}
+                            selectLabel={this.selectLabel}
+                            >
+                         </Label>
                 })
               }
 
+              <div className="canvas-grid-item end-item" onClick={() => this.addLabel()}>
+                <div id="add-label"><span className="lnr lnr-plus-circle"></span><br/><p>Add label</p></div>
               </div>
-            </div> */ }
 
-            {
-              this.state.labels.map((label) => {
-                return <Label 
-                          key={label.id}
-                          id={label.id} 
-                          name={label.name} 
-                          design={this.state.design}
-                          changeNameHandler={this.changeLabelName.bind(this, label.id)}
-                          openTextPanel={() => this.changeOpenPanel('3')}
-                          openLabelPanel={() => this.changeOpenPanel('2')}
-                          selectLabel={this.selectLabel}
-                          >
-                       </Label>
-              })
-            }
-
-            <div className="canvas-grid-item end-item" onClick={() => this.addLabel()}>
-              <div id="add-label"><span className="lnr lnr-plus-circle"></span><br/><p>Add label</p></div>
             </div>
 
+            <div className="canvas-footer">Created using MissBerry Label Generator (www.missberry.pl)</div>
           </div>
-
-          <div className="canvas-footer">Created using MissBerry Label Generator (www.missberry.pl)</div>
         </div>
 
       </div>

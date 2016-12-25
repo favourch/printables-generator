@@ -9,6 +9,7 @@ import PageNotFound from './components/PageNotFound'
 import Register from './components/Register'
 import Login from './components/Login'
 import Admin from './components/Admin'
+import MyDesigns from './components/MyDesigns'
 
 cloudinaryConfig({ cloud_name: 'bluecreative' });
 
@@ -33,11 +34,14 @@ class App extends Component {
     return (
       <Router history={browserHistory}>
         <Route path='/' component={ Home } />
-        <Route path="admin" component={ Admin } onEnter={ requireAuth } />
-        <Route path='browse' component={ Browse } />
-        <Route path='create' component={ Create } />
-        <Route path='register' component={ Register } />
-        <Route path='login' component={ Login } />
+        <Route path="/admin" component={ Admin } onEnter={ requireAuth } />
+        <Route path='/browse' component={ Browse } />
+        <Route path='/my-designs' component={ MyDesigns } />
+        <Route path='/create' component={ Create }>
+          <Route path="/create/:designId" component={ Create } />
+        </Route>
+        <Route path='/register' component={ Register } />
+        <Route path='/login' component={ Login } />
         <Route path='*' component={ PageNotFound } />
       </Router>
     );
