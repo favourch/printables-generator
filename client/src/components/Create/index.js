@@ -40,9 +40,10 @@ class Create extends Component {
           borderColor: '#333'}
         ],
 
-        width: 150,
-        height: 120,
-        backgroundColor: '#333'
+        width: 50,
+        height: 50,
+        backgroundColor: '#333',
+        backgroundImage: '',
       },
       labels: sampleLabels,
       calendar: {

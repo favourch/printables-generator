@@ -18,7 +18,7 @@ cloudinary.config({
   api_secret: 'jlYMNntJd5Aqe3jOzxlhfo2H0SA' 
 });
 
-localStorage.loggedIn = true;
+localStorage.loggedIn = false;
 const loggedIn = localStorage.loggedIn;
 
 const requireAuth = (nextState, replace, callback) => {

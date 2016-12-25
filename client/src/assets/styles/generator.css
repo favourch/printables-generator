@@ -101,8 +101,8 @@ a {
   position: relative;
   margin: 60px auto;
   background-color: #fff;
-  width: 630px;
-  min-height: 891px;
+  width: 210mm;
+  min-height: 297mm;
   height: auto;
   -webkit-box-shadow: 5px 5px 10px -2px rgba(0, 0, 0, 0.29);
   -moz-box-shadow: 5px 5px 10px -2px rgba(0, 0, 0, 0.29);
