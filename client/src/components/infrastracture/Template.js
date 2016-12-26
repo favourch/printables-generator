@@ -8,6 +8,20 @@ class Template extends Component {
 			<div className="App">
 				<Navigation />
           <div className="app-content">
+            <div id="notifications">
+              <div className="alert" role="alert">
+                <span className="alert-type">Success!</span> <span className="alert-message">Message</span>
+              </div>
+            </div>
+            { /*
+            <div className="app-loader">
+              <div className="loader-text"> 
+                <span className="lnr lnr-hourglass"></span>
+                { this.props.loaderText } 
+              </div>
+            </div>
+            */}
+
     				{ this.props.width !== "full" &&
     					<div className="wrapper">
     						{ this.props.children }

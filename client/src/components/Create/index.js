@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import Template from '../infrastracture/Template'
 import { PanelGroup, Panel } from 'react-bootstrap'
 import Label from './Label'
+import Sidebar from './Sidebar'
 import PopupColorPicker from './PopupColorPicker'
-import { SquareShape, CircleShape, EllipseShape, RectangleShape, BadgeShape, LabelShape } from './Shapes'
+import { SquareShape, CircleShape, BadgeShape, LabelShape } from './Shapes'
 import cloudinary from 'cloudinary'
 import axios from 'axios'
+import { showMessage } from '../infrastracture/utils'
 
 class Create extends Component {
 
@@ -86,16 +88,6 @@ class Create extends Component {
       })
       .catch(console.error);
     }
-
-    // Get users list from the api
-    // axios.get('/api/users')
-    //   .then(response => {
-    //     this.setState({
-    //         users: response.data
-    //     })
-    //   })
-    //   .catch(console.error);
-
   }
 
   
@@ -213,7 +205,6 @@ class Create extends Component {
   }
 
   handleBorderColorChange(property, id, color) {
-    console.log(property, id, color)
     var design = this.state.design
     var borders = design.borders
     for (var i = 0; i < borders.length; i++) {
@@ -361,18 +352,13 @@ class Create extends Component {
 // Save the design
 
   saveDesign() {
-    console.log('Save design')
-
     const design = {
+      _id: this.state._id,
       title: this.state.title,
       description: this.state.description,
       visibility: this.state.visibility,
       design: this.state.design,
       labels: this.state.labels
-    }
-
-    if (typeof this.state._id !== "undefined") {
-      design._id = this.state._id
     }
 
     console.log('Design')
@@ -381,9 +367,11 @@ class Create extends Component {
     axios.post('/api/design/save', design)
     .then(response => {
       console.log(response.data);
+      showMessage('success', 'The design has been saved.')
     })
     .catch(error => {
       console.log(error);
+      showMessage('error', 'Something went wrong.')
     })
   }
 
@@ -391,7 +379,9 @@ class Create extends Component {
 
     return (
 
-    <Template width="full">
+    <Template width="full" loaderText="Label generator is loading...">
+
+      <Sidebar />
 
       <div className="sidebar">
         <div className="icons-bar">
@@ -453,12 +443,6 @@ class Create extends Component {
               <div className={ this.state.design.shape === 2 ? "design-shape selected" : "design-shape" } onClick={ this.changeShape.bind(this, 2) }>
                 <CircleShape className={ this.state.design.shape === 2 && "selected" } />
               </div>
-              <div className={ this.state.design.shape === 3 ? "design-shape selected" : "design-shape" } onClick={ this.changeShape.bind(this, 3) }>
-                <EllipseShape className={ this.state.design.shape === 3 && "selected" } />
-              </div>
-              <div className={ this.state.design.shape === 4 ? "design-shape selected" : "design-shape" } onClick={ this.changeShape.bind(this, 4) }>
-                <RectangleShape className={ this.state.design.shape === 4 && "selected" } />
-              </div>
               <div className={ this.state.design.shape === 5 ? "design-shape selected" : "design-shape" } onClick={ this.changeShape.bind(this, 5) }>
                 <BadgeShape className={ this.state.design.shape === 5 && "selected" } />
               </div>
@@ -478,24 +462,7 @@ class Create extends Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6">
-                <div className="form-group">
-                  <label>Height</label>
-                  <div className="input-group">
-                    <input type="number" className="form-control" name="height" value={this.state.design.height} onChange={this.changeValue} aria-describedby="basic-addon2" />
-                    <span className="input-group-addon" id="basic-addon2">mm</span>
-                  </div>
-                </div>
-              </div>
             </div>
-
-            {/*<div className="form-group">
-              <label>Rounded corners</label>
-              <div className="input-group">
-                <input type="number" className="form-control" name="borderRadius" value={this.state.design.borderRadius} onChange={this.changeValue} aria-describedby="basic-addon2" />
-                <span className="input-group-addon" id="basic-addon2">px</span>
-              </div>
-            </div>*/}
 
           </Panel>
 

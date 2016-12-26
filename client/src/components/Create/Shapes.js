@@ -23,28 +23,6 @@ export class CircleShape extends Component {
   }
 }
 
-export class EllipseShape extends Component {
-  
-  render() {
-    return (
-      <svg width="100" height="100">
-        <ellipse cx="50" cy="50" rx="80" ry="40" fill="#ddd" />
-      </svg>
-    )
-  }
-}
-
-export class RectangleShape extends Component {
-  
-  render() {
-    return (
-      <svg width="100" height="100">
-        <rect width="90" x="5" y="15" height="70" fill="#ddd" />
-      </svg>
-    )
-  }
-}
-
 export class BadgeShape extends Component {
   
   render() {

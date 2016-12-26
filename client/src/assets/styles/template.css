@@ -31,3 +31,37 @@ nav ul {
       display: block; }
     .login-form .input-group label {
       display: block; }
+
+.app-loader {
+  background-color: #f4f4f4;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 99;
+  display: table; }
+  .app-loader .loader-text {
+    text-align: center;
+    border: 1px solid blue;
+    display: table-cell;
+    vertical-align: middle; }
+  .app-loader .lnr {
+    display: block;
+    font-size: 30px;
+    padding-bottom: 20px; }
+
+#notifications {
+  position: fixed;
+  z-index: 9999;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  display: none;
+  cursor: pointer; }
+  #notifications .alert {
+    margin-bottom: 0px;
+    border-radius: 0px; }
+  #notifications .alert-type {
+    font-weight: 700;
+    text-transform: capitalize; }

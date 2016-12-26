@@ -221,7 +221,7 @@ a {
   height: 37px;
   position: fixed;
   top: 50px;
-  z-index: 99; }
+  z-index: 98; }
 
 .action-buttons .btn {
   border-radius: 0px;
@@ -446,7 +446,14 @@ label {
     margin: 0px;
     position: relative;
     top: 0px;
-    padding: 0px; }
+    padding: 0px;
+    position: relative; }
+  .canvas-footer {
+    display: block;
+    position: fixed;
+    bottom: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0px; }
   #add-label {
     display: none; }
   .designed-label .label-text span {
@@ -455,10 +462,7 @@ label {
     color: initial !important;
     text-shadow: initial !important;
     background: initial !important;
-    box-shadow: initial !important; }
-  .canvas-footer {
-    position: relative;
-    padding-top: 50px; } }
+    box-shadow: initial !important; } }
 
 /* CALENDAR */
 .calendar {

@@ -12,7 +12,7 @@ import loginUser from './controllers/users/loginUser';
 import saveDesign from './controllers/designs/saveDesign';
 
 // Connect with mongoDB
-mongoose.connect('mongodb://designadmin:password@ds163677.mlab.com:63677/design');
+mongoose.connect('mongodb://designadmin:password@ds163677.mlab.com:63677/design', { server: { reconnectTries: 999999 } });
 
 const router = express.Router();
 

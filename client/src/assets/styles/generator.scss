@@ -262,7 +262,7 @@ a {
 	height: 37px;
 	position: fixed;
 	top: 50px;
-	z-index: 99;
+	z-index: 98;
 }
 
 .action-buttons .btn {
@@ -550,7 +550,15 @@ label {
 		position: relative;
 		top: 0px;
 		padding: 0px;
-		// border: 2px solid blue;
+		position: relative;
+	}
+
+	.canvas-footer {
+		display: block;
+		position: fixed;
+		bottom: 0px;
+		margin-bottom: 0px;
+		padding-bottom: 0px;
 	}
 
 	#add-label {
@@ -566,11 +574,6 @@ label {
 	    text-shadow: initial !important;
 	    background: initial !important;
 	    box-shadow: initial !important;
-	}
-
-	.canvas-footer {
-		position: relative;
-		padding-top: 50px;
 	}
 
 }

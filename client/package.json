@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.15.3",
     "cloudinary": "^1.4.6",
+    "jquery": "^3.1.1",
     "react": "^15.4.0",
     "react-bootstrap": "^0.30.7",
     "react-cloudinary": "^0.4.1",
