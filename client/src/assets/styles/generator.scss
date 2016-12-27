@@ -273,6 +273,12 @@ a {
 	border-color: #eee;
 	box-shadow: none;
 	text-shadow: none;
+	transition: 0.2s;
+
+	&:hover {
+		background-color: #eee !important;
+		transition: 0.2s;
+	}
 }
 
 .action-buttons .btn .lnr {
@@ -284,6 +290,11 @@ a {
 	color: #fff;
 	border-color: #8da1b7;
 	background-image: none;
+
+	&:hover {
+		background-color: #68819a !important;
+		transition: 0.2s;
+	}
 }
 
 .panel-group .panel+.panel {
@@ -524,6 +535,10 @@ label {
 
 .design-shape {
 	width: 50%;
+}
+
+.design-shape svg {
+	cursor: pointer;
 }
 
 @media screen {

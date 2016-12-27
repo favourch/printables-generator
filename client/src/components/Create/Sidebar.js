@@ -218,24 +218,17 @@ class Sidebar extends React.Component {
                     <option value="800">Black</option>
                   </select>
                 </div>
-
-                <div className="form-group">
-                  <label>Letter spacing</label><br/>
-                  <div className="input-group">
-                    <input type="number" className="form-control" aria-describedby="basic-addon2" name="letterSpacing" value={this.props.design.letterSpacing} onChange={this.props.changeValue} />
-                    <span className="input-group-addon" id="basic-addon2">px</span>
-                  </div>
-                </div>
               </div>
             </div>
 
             <div className="row">
               <div className="col-md-6">
                 <div className="form-group">
-                  <label>Text alignment</label><br/>
-                  <button className={this.props.design.textAlign === 'left' ? 'text-align-btn active' : 'text-align-btn'} onClick={() => this.props.changeTextAlign('left')}><span className="lnr lnr-text-align-left"></span></button>
-                  <button className={this.props.design.textAlign === 'center' ? 'text-align-btn active' : 'text-align-btn'} onClick={() => this.props.changeTextAlign('center')}><span className="lnr lnr-text-align-center"></span></button>
-                  <button className={this.props.design.textAlign === 'right' ? 'text-align-btn active' : 'text-align-btn'} onClick={() => this.props.changeTextAlign('right')}><span className="lnr lnr-text-align-right"></span></button>
+                  <label>Letter spacing</label><br/>
+                  <div className="input-group">
+                    <input type="number" className="form-control" aria-describedby="basic-addon2" name="letterSpacing" value={this.props.design.letterSpacing} onChange={this.props.changeValue} />
+                    <span className="input-group-addon" id="basic-addon2">px</span>
+                  </div>
                 </div>
               </div>
               <div className="col-md-6">
@@ -247,6 +240,18 @@ class Sidebar extends React.Component {
                 </div>
               </div>
             </div>
+
+            {/*
+            <div className="row">
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label>Text alignment</label><br/>
+                  <button className={this.props.design.textAlign === 'left' ? 'text-align-btn active' : 'text-align-btn'} onClick={() => this.props.changeTextAlign('left')}><span className="lnr lnr-text-align-left"></span></button>
+                  <button className={this.props.design.textAlign === 'center' ? 'text-align-btn active' : 'text-align-btn'} onClick={() => this.props.changeTextAlign('center')}><span className="lnr lnr-text-align-center"></span></button>
+                  <button className={this.props.design.textAlign === 'right' ? 'text-align-btn active' : 'text-align-btn'} onClick={() => this.props.changeTextAlign('right')}><span className="lnr lnr-text-align-right"></span></button>
+                </div>
+              </div>
+            </div>*/}
 
           </Panel>
         </PanelGroup>

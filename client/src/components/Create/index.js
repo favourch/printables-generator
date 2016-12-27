@@ -6,6 +6,7 @@ import axios from 'axios'
 import { showMessage } from '../infrastracture/utils'
 import WebFont from 'webfontloader'
 
+
 class Create extends Component {
 
   constructor(props) {
@@ -87,6 +88,13 @@ class Create extends Component {
             labels: response.data.labels,
             visibility: response.data.visibility
         })
+
+        // LOAD CHOSEN WEB FONT
+        WebFont.load({
+          google: {
+            families: [response.data.design.fontFamily]
+          }
+        });
       })
       .catch(console.error);
     }
@@ -101,16 +109,7 @@ class Create extends Component {
       })
       .catch(console.error);
 
-    // LOAD CHOSEN WEB FONT
-    WebFont.load({
-      google: {
-        families: [this.state.design.fontFamily]
-      }
-    });
-
   }
-
-  
 
   // Add label to the page
 
@@ -132,10 +131,7 @@ class Create extends Component {
   // Change label name
 
   changeLabelName(id, event) {
-    console.log('change label with id ', id)
-    var element = event.target
-    var text = element.getElementsByClassName('inner-label-text')[0].innerHTML
-
+    var text = event.target.innerHTML
     const { labels } = this.state
     function findLabelById(label) { 
         return label.id === id;

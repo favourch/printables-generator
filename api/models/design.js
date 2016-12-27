@@ -35,7 +35,11 @@ const designSchema = new Schema({
     labels: [{ 
       id: Number,
       name: String
-    }]
+    }],
+    created: {
+      type: Date, 
+      default: Date.now
+    }
 })
 
 const Design = mongoose.model('design', designSchema);

@@ -1,5 +1,6 @@
 import React from 'react'
 import cloudinary from 'cloudinary'
+import $ from 'jquery'
 
 export default class Label extends React.Component {
 
@@ -32,22 +33,19 @@ export default class Label extends React.Component {
     const textStyles = { fontFamily: design.fontFamily, 
                          fontSize: design.fontSize,
                          letterSpacing: design.letterSpacing,
-                         color: design.textColor,
                          textAlign: design.textAlign,
                          textDecoration: design.textDecoration,
                          fontStyle: design.fontStyle,
                          textTransform: design.textTransform,
-                         fontWeight: design.fontWeight }
+                         fontWeight: design.fontWeight,
+                         color: design.textColor }
 
     return (
 
       <div className="canvas-grid-item">
         <div className="designed-label">
           <div className="label-image"
-               onClick={() => { this.selectLabel(); this.props.openLabelPanel(); this.props.selectLabel(id); }}
-               contentEditable={true}
-               suppressContentEditableWarning
-               onBlur={this.props.changeText.bind(this, id)} >
+               onClick={() => { this.selectLabel(); this.props.openLabelPanel(); this.props.selectLabel(id); }}>
 
               <CustomSVG 
                   id={id}
@@ -62,6 +60,7 @@ export default class Label extends React.Component {
                   borderWidth2={design.borders[1].borderWidth}
                   textColor={design.textColor}
                   textStyles={textStyles}
+                  changeText={this.props.changeText}
                 /> 
 
           </div>
@@ -186,11 +185,44 @@ export class Shape extends React.Component {
 
 export class CustomSVG extends React.Component {
 
+  componentDidMount() {
+    this.addCSSImportant()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.addCSSImportant()  
+  }
+
+  addCSSImportant() {
+    console.log('LOOK FOR ELEMENT')
+    var currentColor = $('.inner-label-text').css('color')
+
+    var styles = $('.inner-label-text').attr('style');
+    console.log(styles)
+    console.log(styles.length)
+    var newStyles = styles.slice(0, -23)
+    console.log(newStyles)
+    newStyles += 'color: '+currentColor+' !important';
+    console.log(newStyles);
+    $('.inner-label-text').attr('style', newStyles);
+    // console.log(currentColor)
+    // console.log(this.props.textStyles)
+
+    // var elements = document.getElementsByClassName("inner-label-text");
+    // var styles = this.props.textStyles
+    // console.log(styles)
+    // elements[0].setAttribute( 'style', 'color: '+currentColor+' !important' );  
+  }
+
   render() {
 
     return (
 
-      <svg id={`label${this.props.id}`} width={`${this.props.width}mm`} height={`${this.props.width}mm`} viewBox="0 0 100 100">
+      <svg 
+        id={`label${this.props.id}`} 
+        width={`${this.props.width}mm`} 
+        height={`${this.props.width}mm`} 
+        viewBox="0 0 100 100">
 
         <defs>
           <pattern id="img1" patternUnits="userSpaceOnUse" width="100" height="100">
@@ -207,30 +239,38 @@ export class CustomSVG extends React.Component {
           type={this.props.shape} 
           background={this.props.backgroundColor}
           borderColor={this.props.borderColor2}
-          borderWidth={this.props.borderWidth2}
-          contentEditable={false} />
+          borderWidth={this.props.borderWidth2} />
 
         <Shape
           type={this.props.shape} 
           background={this.props.backgroundImage === "" ? this.props.backgroundColor : "url(#img1)"}
           borderColor={this.props.borderColor}
-          borderWidth={this.props.borderWidth}
-          contentEditable={false} />
+          borderWidth={this.props.borderWidth} />
 
-        <text 
-          textAnchor="middle" 
-          alignmentBaseline="central"
-          dominantBaseline="middle"
-          x="50" 
-          y="52" 
-          fill={this.props.textColor}
-          style={this.props.textStyles}
-          contentEditable={true}
-          suppressContentEditableWarning
-          className="inner-label-text" >
-            {this.props.name}
-        </text>
-
+        <foreignObject 
+          x="0" 
+          y="42"
+          width="100"
+          height="100"
+          alignmentBaseline="central">
+            <div 
+              style={{textAlign: "center"}}
+              spellCheck={false}>
+                <text 
+                  textAnchor="middle" 
+                  alignmentBaseline="central"
+                  dominantBaseline="middle" 
+                  fill={this.props.textColor}
+                  style={this.props.textStyles}
+                  contentEditable="true"
+                  suppressContentEditableWarning
+                  onBlur={this.props.changeText.bind(this, this.props.id)}
+                  className="inner-label-text" >
+                    {this.props.name}
+                </text>
+            </div>
+        </foreignObject>
+      
       </svg>
 
     )

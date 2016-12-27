@@ -37,7 +37,7 @@ export const takeDesignScreenshot = (id) => {
     var url = 'http://localhost:3000/create/' + id
 
     horseman
-      .userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36')
+      .userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9')
       .viewport(1440,1000)
       .open(url)
       .log('Opened ' + url)
@@ -54,7 +54,7 @@ export const generateDesignPdf = (id) => {
     var url = 'http://localhost:3000/create/' + id
 
     horseman
-      .userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36')
+      .userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9')
       .open(url)
       .pdf('client/public/img/designs/'+id+'.pdf', {
         format: 'A4',

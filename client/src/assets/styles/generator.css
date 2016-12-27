@@ -230,7 +230,11 @@ a {
   color: #666;
   border-color: #eee;
   box-shadow: none;
-  text-shadow: none; }
+  text-shadow: none;
+  transition: 0.2s; }
+  .action-buttons .btn:hover {
+    background-color: #eee !important;
+    transition: 0.2s; }
 
 .action-buttons .btn .lnr {
   margin-right: 6px; }
@@ -240,6 +244,9 @@ a {
   color: #fff;
   border-color: #8da1b7;
   background-image: none; }
+  .action-buttons .pull-right .btn:hover {
+    background-color: #68819a !important;
+    transition: 0.2s; }
 
 .panel-group .panel + .panel {
   margin-top: 0px; }
@@ -432,6 +439,9 @@ label {
 
 .design-shape {
   width: 50%; }
+
+.design-shape svg {
+  cursor: pointer; }
 
 @media print {
   .topnav, .sidebar, .action-buttons {
