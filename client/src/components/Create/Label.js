@@ -43,9 +43,14 @@ export default class Label extends React.Component {
 
       <div className="canvas-grid-item">
         <div className="designed-label">
-          <div className={this.state.selected === true ? 'label-image selected' : 'label-image'} onClick={() => { this.selectLabel(); this.props.openLabelPanel(); this.props.selectLabel(id); }} >
+          <div className={this.state.selected === true ? 'label-image selected' : 'label-image'} 
+               onClick={() => { this.selectLabel(); this.props.openLabelPanel(); this.props.selectLabel(id); }}
+               contentEditable={true}
+               suppressContentEditableWarning
+               onBlur={this.props.changeText.bind(this, id)} >
 
               <CustomSVG 
+                  id={id}
                   width={design.width}
                   name={name}
                   shape={design.shape}
@@ -159,12 +164,12 @@ export class CustomSVG extends React.Component {
 
     return (
 
-      <svg width={`${this.props.width}mm`} height={`${this.props.width}mm`} viewBox="0 0 100 100">
+      <svg id={`label${this.props.id}`} width={`${this.props.width}mm`} height={`${this.props.width}mm`} viewBox="0 0 100 100">
 
         <defs>
           <pattern id="img1" patternUnits="userSpaceOnUse" width="100" height="100">
             <image 
-              href={this.props.backgroundImage} 
+              xlinkHref={this.props.backgroundImage} 
               x="0" 
               y="0" 
               width="100"
@@ -176,13 +181,15 @@ export class CustomSVG extends React.Component {
           type={this.props.shape} 
           background={this.props.backgroundColor}
           borderColor={this.props.borderColor2}
-          borderWidth={this.props.borderWidth2} />
+          borderWidth={this.props.borderWidth2}
+          contentEditable={false} />
 
         <Shape
           type={this.props.shape} 
           background={this.props.backgroundImage === "" ? this.props.backgroundColor : "url(#img1)"}
           borderColor={this.props.borderColor}
-          borderWidth={this.props.borderWidth} />
+          borderWidth={this.props.borderWidth}
+          contentEditable={false} />
 
         <text 
           textAnchor="middle" 
@@ -191,7 +198,10 @@ export class CustomSVG extends React.Component {
           x="50" 
           y="52" 
           fill={this.props.textColor}
-          style={this.props.textStyles}>
+          style={this.props.textStyles}
+          contentEditable={true}
+          suppressContentEditableWarning
+          className="inner-label-text" >
             {this.props.name}
         </text>
 
@@ -200,3 +210,4 @@ export class CustomSVG extends React.Component {
     )
   }
 }
+

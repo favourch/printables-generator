@@ -1,4 +1,5 @@
 import express from 'express';
+import config from '../config.json';
 import mongoose from 'mongoose';
 import User from './models/user';
 import Design from './models/design';
@@ -12,7 +13,7 @@ import loginUser from './controllers/users/loginUser';
 import saveDesign from './controllers/designs/saveDesign';
 
 // Connect with mongoDB
-mongoose.connect('mongodb://designadmin:password@ds163677.mlab.com:63677/design', { server: { reconnectTries: 999999 } });
+mongoose.connect(config.mongoDB, { server: { reconnectTries: 999999 } });
 
 const router = express.Router();
 

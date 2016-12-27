@@ -1,0 +1,6 @@
+{
+    "mongoDB" : "mongodb://designadmin:password@ds163677.mlab.com:63677/design",
+    "googleFonts" : {
+    	"apiKey" : "AIzaSyBCnpPf46kxGMsFE9pQG4Pu2YseRvnjPVE"
+    }
+}
