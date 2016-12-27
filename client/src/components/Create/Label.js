@@ -43,7 +43,7 @@ export default class Label extends React.Component {
 
       <div className="canvas-grid-item">
         <div className="designed-label">
-          <div className={this.state.selected === true ? 'label-image selected' : 'label-image'} 
+          <div className="label-image"
                onClick={() => { this.selectLabel(); this.props.openLabelPanel(); this.props.selectLabel(id); }}
                contentEditable={true}
                suppressContentEditableWarning
@@ -100,6 +100,32 @@ export class Shape extends React.Component {
           fill={this.props.background}
           stroke={this.props.borderColor}
           strokeWidth={this.props.borderWidth} />
+      )
+    }
+
+    if (this.props.type === 3) {
+      return (
+        <path 
+          fill={this.props.background}
+          stroke={this.props.borderColor}
+          strokeWidth={this.props.borderWidth}
+          d="M89.735,77.383L53.847,98.102c-2.381,1.375-5.312,1.375-7.692,0L10.266,77.383
+    c-2.381-1.375-3.847-3.914-3.847-6.662V29.28c0-2.749,1.466-5.289,3.847-6.662L46.154,1.897c2.38-1.374,5.312-1.374,7.692,0
+    l35.889,20.721c2.38,1.374,3.846,3.914,3.846,6.662v41.44C93.581,73.469,92.115,76.008,89.735,77.383"/>
+      )
+    }
+
+    if (this.props.type === 4) {
+      return (
+        <path 
+          fill={this.props.background}
+          stroke={this.props.borderColor}
+          strokeWidth={this.props.borderWidth}
+          d="M88.343,34.082c0.098-12.027-14.08-14.115-21.071-12.562c-6.99,1.553-14.804-0.972-17.271-7.944
+      c-2.468,6.972-10.281,9.497-17.272,7.944c-6.991-1.553-21.169,0.535-21.07,12.562c0,0-10.768,0.409-10.768,16.094
+      c0,15.685,10.768,16.094,10.768,16.094c-0.099,12.027,14.079,14.114,21.07,12.562s14.805,0.972,17.272,7.943
+      c2.467-6.972,10.28-9.496,17.271-7.943c6.991,1.553,21.169-0.534,21.071-12.562c0,0,10.767-0.409,10.767-16.094
+      C99.109,34.491,88.343,34.082,88.343,34.082z" />
       )
     }
 

@@ -576,6 +576,10 @@ label {
 	    box-shadow: initial !important;
 	}
 
+	#notifications {
+		display: none !important;
+	}
+
 }
 
 /* CALENDAR */
@@ -623,62 +627,3 @@ label {
 }
 
 
-/* BROWSE VIEW */
-
-.design-grid {
-	display: flex;
-	flex-wrap: wrap;
-}
-
-.design-item {
-	width: 22%;
-	margin: 1.5%;
-	text-align: center;
-	padding-bottom: 10px;
-}
-
-.design-downloads {
-	display: flex;
-	width: 40%;
-	margin: auto;
-}
-
-.design-downloads>div{
-	width: 50%;
-	text-align: center;
-}
-
-.design-image {
-	box-shadow: 0px -1px 12px 0px rgba(0,0,0,0.15);
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	overflow: hidden;
-	width: 100%;
-	margin: auto;
-}
-
-.design-details {
-	background-color: #f1f4f7;
-	color: #5c657d;
-	border: 1px solid #ddd;
-	position: relative;
-	z-index: 99;
-	padding: 10px;
-}
-
-.design-image img {
-	max-width: 100%;
-}
-
-.design-title {
-	font-weight: 600;
-	font-size: 16px;
-}
-
-.design-author {
-	margin-bottom: 10px;
-}
-
-.PlainEditable {
-	display: inline;
-}

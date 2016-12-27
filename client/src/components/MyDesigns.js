@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Template from './infrastracture/Template'
-import cloudinary from 'cloudinary'
 import { Link } from 'react-router'
 import axios from 'axios'
 
@@ -53,7 +52,7 @@ export class DesignPreview extends React.Component {
 
         <div className="design-item">
           <Link to={`/create/${this.props.id}`}>
-          <div className="design-image"><img src={ cloudinary.url(`designs/${this.props.id}`, { width: 250, crop: "fill" }) } alt="Label design" /></div>
+          <div className="design-image" style={{ backgroundImage: 'url(/img/designs/'+this.props.id+'.jpg)' }}></div>
           <div className="design-details">
             <div className="design-title">{this.props.title}</div>
             <div className="design-author">Jagoda Przybyla</div>

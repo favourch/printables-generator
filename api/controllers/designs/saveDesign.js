@@ -1,23 +1,27 @@
 import Design from '../../models/design';
-import ObjectId from 'mongodb'
+import Horseman from 'node-horseman'
 
 const saveDesign = (req, res) => {
 
     const id = req.body._id
-    console.log(req.body)
 
     // UPDATE IF HAS AN ID
     if (typeof id !== "undefined") {
       Design.findByIdAndUpdate(id, req.body, {}, function(err) {
         console.log(err)
+        takeDesignScreenshot(id)
+        generateDesignPdf(id)
       })
     }
 
     // INSERT IF DOESN'T HAVE AN ID
     else {
       const newDesign = new Design(req.body)
-      newDesign.save(function(err) {
+      newDesign.save(function(err, design) {
         console.log(err)
+        console.log('Inserted design with id:', design._id)
+        takeDesignScreenshot(design._id)
+        generateDesignPdf(design._id)
       });      
     }
 
@@ -25,3 +29,39 @@ const saveDesign = (req, res) => {
 }
 
 export default saveDesign;
+
+
+export const takeDesignScreenshot = (id) => {
+
+    var horseman = new Horseman();
+    var url = 'http://localhost:3000/create/' + id
+
+    horseman
+      .userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36')
+      .viewport(1440,1000)
+      .open(url)
+      .log('Opened ' + url)
+      .log('Generate the screenshot of design: '+id)
+      .crop('#canvas', 'client/public/img/designs/'+id+'.jpg')
+      .log('took screenshot')
+      .close();
+}
+
+
+export const generateDesignPdf = (id) => {
+
+    var horseman = new Horseman();
+    var url = 'http://localhost:3000/create/' + id
+
+    horseman
+      .userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36')
+      .open(url)
+      .pdf('client/public/img/designs/'+id+'.pdf', {
+        format: 'A4',
+        margin: '0cm'
+      })
+      .log('generated pdf')
+      .close();  
+
+}
+

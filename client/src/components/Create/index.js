@@ -452,7 +452,7 @@ class Create extends Component {
           </div>
         </div>
 
-        <div className="canvas" style={{ transform: 'scale('+this.state.zoom+','+this.state.zoom+')' }}>
+        <div id="canvas" className="canvas" style={{ transform: 'scale('+this.state.zoom+','+this.state.zoom+')' }}>
           <div className="canvas-printable">
             <div className="canvas-grid">
 

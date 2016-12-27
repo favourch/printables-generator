@@ -2,11 +2,17 @@ import React from 'react'
 import cloudinary from 'cloudinary'
 import { PanelGroup, Panel } from 'react-bootstrap'
 import PopupColorPicker from './PopupColorPicker'
-import { SquareShape, CircleShape, BadgeShape, LabelShape } from './Shapes'
+import { SquareShape, CircleShape, BadgeShape, LabelShape, Shape3, Shape4 } from './Shapes'
 
 class Sidebar extends React.Component {
 
 	render() {
+
+    let bgArray = []
+    for (var i = 1; i <= 15; i++) {
+      bgArray.push(i)
+    }
+
     return (
 
       <div className="sidebar">
@@ -69,6 +75,12 @@ class Sidebar extends React.Component {
               <div className={ this.props.design.shape === 2 ? "design-shape selected" : "design-shape" } onClick={ this.props.changeShape.bind(this, 2) }>
                 <CircleShape className={ this.props.design.shape === 2 && "selected" } />
               </div>
+              <div className={ this.props.design.shape === 3 ? "design-shape selected" : "design-shape" } onClick={ this.props.changeShape.bind(this, 3) }>
+                <Shape3 className={ this.props.design.shape === 3 && "selected" } />
+              </div>
+              <div className={ this.props.design.shape === 4 ? "design-shape selected" : "design-shape" } onClick={ this.props.changeShape.bind(this, 4) }>
+                <Shape4 className={ this.props.design.shape === 4 && "selected" } />
+              </div>
               <div className={ this.props.design.shape === 5 ? "design-shape selected" : "design-shape" } onClick={ this.props.changeShape.bind(this, 5) }>
                 <BadgeShape className={ this.props.design.shape === 5 && "selected" } />
               </div>
@@ -104,29 +116,22 @@ class Sidebar extends React.Component {
               <label>Background image</label><br/>
 
               <div className="bg-image-options">
-                <img 
-                  className="bg-image-option"
-                  src={ cloudinary.url("defaultBackgrounds/01", { width: 70, height: 70, crop: "fill" }) } 
-                  role="presentation"
-                  onClick={ this.props.changeBackgroundImage.bind(this, 'defaultBackgrounds/01') } />
 
                 <img 
                   className="bg-image-option"
-                  src={ cloudinary.url("defaultBackgrounds/02", { width: 70, height: 70, crop: "fill" }) } 
+                  src={ cloudinary.url("defaultBackgrounds/no-bg", { width: 70, height: 70, crop: "fill" }) } 
                   role="presentation"
-                  onClick={ this.props.changeBackgroundImage.bind(this, 'defaultBackgrounds/02') } />
+                  onClick={ this.props.changeBackgroundImage.bind(this, '') } />
 
-                <img 
-                  className="bg-image-option"
-                  src={ cloudinary.url("defaultBackgrounds/03", { width: 70, height: 70, crop: "fill" }) } 
-                  role="presentation"
-                  onClick={ this.props.changeBackgroundImage.bind(this, 'defaultBackgrounds/03') } />
-
-                <img 
-                  className="bg-image-option"
-                  src={ cloudinary.url("defaultBackgrounds/04", { width: 70, height: 70, crop: "fill" }) } 
-                  role="presentation"
-                  onClick={ this.props.changeBackgroundImage.bind(this, 'defaultBackgrounds/04') } />
+                { bgArray.map( item => {
+                  return (
+                    <img 
+                      className="bg-image-option"
+                      src={ cloudinary.url("defaultBackgrounds/"+item+".png", { width: 70, height: 70, crop: "fill" }) } 
+                      role="presentation"
+                      onClick={ this.props.changeBackgroundImage.bind(this, "defaultBackgrounds/"+item+".png") } />
+                  )
+                })}
 
               </div>
 

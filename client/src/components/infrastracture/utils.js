@@ -5,8 +5,8 @@ export function showMessage(type, message) {
 	type += '!';
 	$('#notifications .alert-type').text(type);
 	$('#notifications .alert-message').text(message);
-	$('#notifications').show();
+	$('#notifications').fadeIn();
 	$('#notifications').on('click', function() {
-		$(this).hide();
+		$(this).fadeOut();
 	})
 }
