@@ -3,6 +3,8 @@ import apiRouter from './api';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 import passport from 'passport';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 
 const app = express();
 
@@ -12,6 +14,16 @@ app.set('port', (process.env.PORT || 3001));
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
+
+// Enable cookies
+app.use(cookieParser());
+
+// Express Session
+app.use(session({
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: true
+}));
 
 // Parse post request body
 app.use(bodyParser.json());

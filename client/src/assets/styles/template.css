@@ -66,3 +66,58 @@ nav ul {
   #notifications .alert-type {
     font-weight: 700;
     text-transform: capitalize; }
+
+.btn {
+  border-radius: 0px;
+  height: 37px;
+  box-shadow: none;
+  text-shadow: none;
+  transition: 0.2s;
+  background-color: #7c93ab;
+  color: #fff;
+  border-color: #8da1b7;
+  background-image: none; }
+  .btn:hover {
+    background-color: #68819a !important;
+    border-color: #8da1b7;
+    transition: 0.2s; }
+
+.btn.btn-success {
+  border-radius: 0px;
+  height: 37px;
+  box-shadow: none;
+  text-shadow: none;
+  transition: 0.2s;
+  background-color: #ff7680;
+  color: #fff;
+  border-color: #8da1b7;
+  background-image: none; }
+  .btn.btn-success:hover {
+    background-color: #e2616a !important;
+    border-color: #8da1b7;
+    transition: 0.2s; }
+
+.dropzone-preview {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border: 1px solid #ddd; }
+  .dropzone-preview img {
+    max-width: 200px; }
+
+.dropzone-inside {
+  text-align: center; }
+  .dropzone-inside h4 {
+    text-align: center;
+    margin: 20px;
+    font-size: 16px;
+    line-height: 20px;
+    color: #666; }
+  .dropzone-inside .lnr {
+    font-size: 60px;
+    color: #666; }
+
+.dropzone-with-preview {
+  width: 410px; }
+  .dropzone-with-preview .dropzone-preview {
+    float: right; }

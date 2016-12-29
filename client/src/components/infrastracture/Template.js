@@ -7,7 +7,7 @@ class Template extends Component {
 		return (
 			<div className="App">
 				<Navigation />
-          <div className="app-content">
+          <div className="app-content" style={{backgroundColor: this.props.backgroundColor}}>
             <div id="notifications">
               <div className="alert" role="alert">
                 <span className="alert-type">Success!</span> <span className="alert-message">Message</span>

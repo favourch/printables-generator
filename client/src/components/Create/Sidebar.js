@@ -34,12 +34,6 @@ class Sidebar extends React.Component {
             <p>Text</p>
           </div>
 
-          { this.props.selected.length !== 0 &&
-            <div className="menu-icon push-bottom" onClick={this.props.deleteSelected}>
-              <div className="icon"><span className="lnr lnr-trash"></span></div>
-              <p>Delete</p>
-            </div>
-          }
         </div>
 
         <PanelGroup activeKey={this.props.openPanel} onSelect={this.props.changeOpenPanel} accordion>
@@ -108,6 +102,43 @@ class Sidebar extends React.Component {
           <Panel header="Style" eventKey="3">
 
             <div className="form-group">
+              <label>Border</label>
+
+              {
+                this.props.design.borders.map((border, index, array) => {
+                    return <div key={index} className="flex-input">
+                              <div className="flex-input-item input-group width-30">
+                                <input type="number" min="0" className="form-control" name="borderWidth" value={ border.borderWidth } onChange={this.props.changeBorderValue.bind(this, 'borderWidth', border.id)} aria-describedby="basic-addon2" />
+                                <span className="input-group-addon" id="basic-addon2">px</span>
+                              </div>
+                              <div className="flex-input-item">
+                                <PopupColorPicker color={ border.borderColor } changeHandler={ this.props.handleBorderColorChange.bind(this, 'borderColor', border.id) } />
+                              </div>
+                              <div className="flex-input-item width-30">
+                                <select className="form-control" name="borderStyle" value={ border.borderStyle } onChange={this.changeValue}>
+                                  <option value="solid">solid</option>
+                                  <option value="dashed">dashed</option>
+                                  <option value="dotted">dotted</option>
+                                </select>
+                              </div>
+                              <div className="flex-input-item">
+                                {index >= 1 &&
+                                  <div className="border-button">
+                                    <span className="lnr lnr-plus-circle" onClick={this.props.addBorder}></span>
+                                  </div>
+                                }
+                                {index >= 2 &&
+                                  <div className="border-button">
+                                    <span className="lnr lnr-trash" onClick={this.props.deleteBorder.bind(this, border.id)}></span>
+                                  </div>
+                                }
+                              </div>
+                            </div>
+                })
+              }
+            </div>
+
+            <div className="form-group">
               <label>Background color</label><br/>
               <PopupColorPicker color={ this.props.design.backgroundColor } changeHandler={ this.props.handleColorChange.bind(this, 'backgroundColor') } />
             </div>
@@ -126,6 +157,7 @@ class Sidebar extends React.Component {
                 { bgArray.map( item => {
                   return (
                     <img 
+                      key={item}
                       className="bg-image-option"
                       src={ cloudinary.url("defaultBackgrounds/"+item+".png", { width: 70, height: 70, crop: "fill" }) } 
                       role="presentation"
@@ -136,41 +168,6 @@ class Sidebar extends React.Component {
               </div>
 
             </div>
-
-            <label>Border</label>
-
-            {
-              this.props.design.borders.map((border, index, array) => {
-                  return <div key={index} className="flex-input">
-                            <div className="flex-input-item input-group width-30">
-                              <input type="number" min="0" className="form-control" name="borderWidth" value={ border.borderWidth } onChange={this.props.changeBorderValue.bind(this, 'borderWidth', border.id)} aria-describedby="basic-addon2" />
-                              <span className="input-group-addon" id="basic-addon2">px</span>
-                            </div>
-                            <div className="flex-input-item">
-                              <PopupColorPicker color={ border.borderColor } changeHandler={ this.props.handleBorderColorChange.bind(this, 'borderColor', border.id) } />
-                            </div>
-                            <div className="flex-input-item width-30">
-                              <select className="form-control" name="borderStyle" value={ border.borderStyle } onChange={this.changeValue}>
-                                <option value="solid">solid</option>
-                                <option value="dashed">dashed</option>
-                                <option value="dotted">dotted</option>
-                              </select>
-                            </div>
-                            <div className="flex-input-item">
-                              {index >= 1 &&
-                                <div className="border-button">
-                                  <span className="lnr lnr-plus-circle" onClick={this.props.addBorder}></span>
-                                </div>
-                              }
-                              {index >= 2 &&
-                                <div className="border-button">
-                                  <span className="lnr lnr-trash" onClick={this.props.deleteBorder.bind(this, border.id)}></span>
-                                </div>
-                              }
-                            </div>
-                          </div>
-              })
-            }
 
           </Panel>              
 

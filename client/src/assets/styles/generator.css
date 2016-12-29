@@ -27,7 +27,8 @@ a {
 .icons-bar {
   background-color: #7c93ab;
   color: #fff;
-  position: absolute;
+  position: fixed;
+  top: 50px;
   left: 0px;
   width: 80px;
   height: 100%; }
@@ -152,6 +153,25 @@ a {
 
 .label-image svg .customcolor {
   fill: #333 !important; }
+
+.label-image .delete-label {
+  background-color: #ff6b6b;
+  width: 40px;
+  height: 40px;
+  top: calc(50% - 20px);
+  left: -10px;
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+  display: none;
+  text-align: center;
+  line-height: 42px;
+  border-radius: 50%;
+  color: #fff;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2); }
+
+.label-image:hover .delete-label {
+  display: block; }
 
 #label-size-range {
   width: 60%;
@@ -472,9 +492,16 @@ label {
     color: initial !important;
     text-shadow: initial !important;
     background: initial !important;
-    box-shadow: initial !important; }
+    box-shadow: initial !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    /* Non-Webkit Browsers */ }
   #notifications {
-    display: none !important; } }
+    display: none !important; }
+  .inner-label-text {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    /* Non-Webkit Browsers */ } }
 
 /* CALENDAR */
 .calendar {

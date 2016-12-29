@@ -1,10 +1,47 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { Navbar, Nav, NavDropdown, MenuItem } from 'react-bootstrap'
+import { logoutUser } from './utils'
+import axios from 'axios'
 
 class Navigation extends Component {
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      userId: '',
+      username: '',
+      email: '',
+      firstName: '',
+      lastName: '',
+      bio: ''
+    }
+
+  }
+
+	componentDidMount() {
+
+		// Get user data from the API
+		axios.get('/api/user/currentUser')
+		  .then(response => {
+		    console.log('GOT THE CURRENT USER')
+		    console.log(response)
+		    this.setState({
+		        userId: response.data._id,
+		        username: response.data.username,
+		        email: response.data.email,
+		        firstName: response.data.firstName,
+		        lastName: response.data.lastName
+		    })
+		  })
+		  .catch(console.error);
+	}
+
 	render() {
+
+		const name = (this.state.firstName !== '') ? this.state.firstName : this.state.username
+
 		return (
 	        <Navbar collapseOnSelect id="main-nav">
 	          <Navbar.Header>
@@ -16,19 +53,20 @@ class Navigation extends Component {
 	          <Navbar.Collapse>
 	            <Nav>
 	              <li><Link to="/" activeClassName="active">Home</Link></li>
-	              <li><Link to="/browse" activeClassName="active">Browse designs</Link></li>
-	              <li><Link to="/my-designs" activeClassName="active">My designs</Link></li>
-	              <li><Link to="/create" activeClassName="active">Create new design</Link></li>
+	              <li><Link to="/browse" activeClassName="active">Browse projects</Link></li>
+	              <li><Link to={`/users/${this.state.username}`} activeClassName="active">My profile</Link></li>
+	              <li><Link to="/create" activeClassName="active">Create new project</Link></li>
 	              <li><Link to="/register" activeClassName="active">Register</Link></li>
 	              <li><Link to="/login" activeClassName="active">Login</Link></li>
+	              <li><Link to="/settings" activeClassName="active">Settings</Link></li>
 	            </Nav>
 	            <Nav pullRight>
 	              <div className="profile-picture"></div>
-	              <NavDropdown eventKey={3} title="Jagoda Przybyla" id="basic-nav-dropdown">
-	                <MenuItem eventKey={3.1}>My profile</MenuItem>
-	                <MenuItem eventKey={3.2}>Settings</MenuItem>
+	              <NavDropdown title={name} id="basic-nav-dropdown">
+	                <MenuItem><Link to={`/users/${this.state.username}`}>My profile</Link></MenuItem>
+	                <MenuItem><Link to="/settings">Settings</Link></MenuItem>
 	                <MenuItem divider />
-	                <MenuItem eventKey={3.3}>Logout</MenuItem>
+	                <MenuItem onClick={ () => logoutUser() }>Logout</MenuItem>
 	              </NavDropdown>
 	            </Nav>
 	          </Navbar.Collapse>

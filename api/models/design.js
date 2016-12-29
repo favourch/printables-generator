@@ -36,6 +36,7 @@ const designSchema = new Schema({
       id: Number,
       name: String
     }],
+    author: String,
     created: {
       type: Date, 
       default: Date.now

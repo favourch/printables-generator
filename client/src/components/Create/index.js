@@ -45,7 +45,6 @@ class Create extends Component {
         backgroundImage: '',
       },
       labels: [],
-      selected: [],
       availableFonts: []
     }
 
@@ -56,8 +55,6 @@ class Create extends Component {
     this.colorHandleClick = this.colorHandleClick.bind(this)
     this.zoomIn = this.zoomIn.bind(this)
     this.zoomOut = this.zoomOut.bind(this)
-    this.selectLabel = this.selectLabel.bind(this)
-    this.deleteSelected = this.deleteSelected.bind(this)
     this.addBorder = this.addBorder.bind(this)
     this.changeShape = this.changeShape.bind(this)
     this.changeBorderValue = this.changeBorderValue.bind(this)
@@ -68,6 +65,7 @@ class Create extends Component {
     this.changeTextStyle = this.changeTextStyle.bind(this)
     this.changeTextAlign = this.changeTextAlign.bind(this)
     this.changeFont = this.changeFont.bind(this)
+    this.deleteLabel = this.deleteLabel.bind(this)
   }
 
 
@@ -300,34 +298,15 @@ class Create extends Component {
     }
   }
 
-// Handle selecting and deleting labels
-
-  selectLabel(id) {
-    var selected = this.state.selected
-    var index = selected.indexOf(id)
-    if (index === -1) {
-      selected.push(id)
-      this.setState({
-        selected: selected
-      })
-    } else {
-      selected.splice(index, 1);
-    }
-  }
-
-  deleteSelected() {
-    var selected = this.state.selected
+  deleteLabel(id) {
+    console.log('DELETE LABEL')
+    console.log(id)
     var labels = this.state.labels
-    for (var j = 0; j < selected.length; j++) {
-      for (var i = 0; i < labels.length; i++) {
-          if(labels[i]['id'] === selected[j]) {
-              labels.splice(i, 1);
-          }
-      }
+    for (var i = 0; i < labels.length; i++) {
+        if(labels[i]['id'] === id) {
+            labels.splice(i, 1);
+        }
     }
-    this.setState({
-      labels: labels
-    })
   }
 
 // Border functions
@@ -460,10 +439,10 @@ class Create extends Component {
                             name={label.name} 
                             design={this.state.design}
                             changeNameHandler={this.changeLabelName.bind(this, label.id)}
-                            openTextPanel={() => this.changeOpenPanel('3')}
                             openLabelPanel={() => this.changeOpenPanel('2')}
-                            selectLabel={this.selectLabel}
+                            openTextPanel={() => this.changeOpenPanel('4')}
                             changeText={this.changeLabelName}
+                            deleteLabel={this.deleteLabel}
                             >
                          </Label>
                 })

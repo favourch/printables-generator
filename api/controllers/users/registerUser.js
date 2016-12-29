@@ -6,6 +6,7 @@ const registerUser = (req, res) => {
 
     const firstName = req.body.firstName;
     const email = req.body.email;
+    const username = req.body.username;
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
 
@@ -18,6 +19,14 @@ const registerUser = (req, res) => {
           errorMessage: 'First name must be between 2 and 20 characters.' // Error message for the validator, takes precedent over parameter message
         },
         errorMessage: 'First name is required.'
+      },
+      'username': { //
+        notEmpty: true,
+        isLength: {
+          options: [{ min: 8, max: 100 }],
+          errorMessage: 'Username must be minimum 8 characters.' // Error message for the validator, takes precedent over parameter message
+        },
+        errorMessage: 'Username is required.'
       },
       'email': {
         notEmpty: true,
@@ -49,6 +58,7 @@ const registerUser = (req, res) => {
       var newUser = new User({
            firstName: firstName,
            email: email,
+           username: username,
            password: password
        });
 

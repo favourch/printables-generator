@@ -26,10 +26,24 @@ const userSchema = new Schema({
 		type: Date, 
 		default: Date.now
 	},
+	bio: {
+		type: String
+	},
 	picture: {
 		type: String
 	}
 })
+
+// userSchema.methods.sayHi = function() {
+//   console.log('HELLO SUPER METHODS')
+// }
+
+userSchema.methods.comparePassword = function(candidatePassword, callback) {
+  bcrypt.compare(candidatePassword, this.password, (err, result) => {
+    if (err) { return callback(err) }
+    callback(null, result)
+  })
+}
 
 const User = mongoose.model('user', userSchema);
 
@@ -50,8 +64,10 @@ export const getUserByEmail = (email, callback) => {
 }
 
 export const comparePassword = (password, hash, callback) => {
-	bcrypt.compare(password, hash, function(err, isMatch) {
-    	if (err) throw err;
-    	callback(null, isMatch);
+	console.log('INSIDE COMPARE PASS FUNCTION', password, hash)
+	bcrypt.compare(password, hash, function(err, res) {
+	    if (err) throw err;
+	    console.log('THE RESULT: ', res)
+    	return res;
 	});
 }

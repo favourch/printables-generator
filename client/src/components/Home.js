@@ -29,7 +29,9 @@ class Home extends Component {
   				<ul>
   				{this.state.users.map(user => 
   					<li key={user._id}>
-  						<h3>{user.firstName}</h3>
+  						<h4>{user.firstName} {user.lastName}</h4>
+              <p>{user.email}</p>
+              <p>{user.username}</p>
   					</li>
   				)}
   				</ul>

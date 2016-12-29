@@ -11,13 +11,6 @@ export default class Label extends React.Component {
       selected: false
     }
 
-    this.selectLabel = this.selectLabel.bind(this)
-  }
-
-  selectLabel() {
-    this.setState({
-      selected: !this.state.selected
-    })
   }
 
   render() {
@@ -44,8 +37,7 @@ export default class Label extends React.Component {
 
       <div className="canvas-grid-item">
         <div className="designed-label">
-          <div className="label-image"
-               onClick={() => { this.selectLabel(); this.props.openLabelPanel(); this.props.selectLabel(id); }}>
+          <div className="label-image" onClick={() => this.props.openLabelPanel()}>
 
               <CustomSVG 
                   id={id}
@@ -61,7 +53,12 @@ export default class Label extends React.Component {
                   textColor={design.textColor}
                   textStyles={textStyles}
                   changeText={this.props.changeText}
+                  openTextPanel={this.props.openTextPanel}
                 /> 
+
+              <div className="delete-label" onClick={() => this.props.deleteLabel(id)}>
+                <span className="lnr lnr-trash"></span>
+              </div>
 
           </div>
 
@@ -194,24 +191,14 @@ export class CustomSVG extends React.Component {
   }
 
   addCSSImportant() {
-    console.log('LOOK FOR ELEMENT')
-    var currentColor = $('.inner-label-text').css('color')
-
     var styles = $('.inner-label-text').attr('style');
-    console.log(styles)
-    console.log(styles.length)
-    var newStyles = styles.slice(0, -23)
-    console.log(newStyles)
-    newStyles += 'color: '+currentColor+' !important';
-    console.log(newStyles);
-    $('.inner-label-text').attr('style', newStyles);
-    // console.log(currentColor)
-    // console.log(this.props.textStyles)
-
-    // var elements = document.getElementsByClassName("inner-label-text");
-    // var styles = this.props.textStyles
-    // console.log(styles)
-    // elements[0].setAttribute( 'style', 'color: '+currentColor+' !important' );  
+    if (!styles.includes("!important")) {
+      var newStyles = styles.slice(0, styles.indexOf('color'))
+      newStyles += 'color: '+this.props.textColor+' !important'
+      $('.inner-label-text').each(function(index, element) {
+        $(this).attr('style', newStyles);
+      })
+    }
   }
 
   render() {
@@ -222,7 +209,7 @@ export class CustomSVG extends React.Component {
         id={`label${this.props.id}`} 
         width={`${this.props.width}mm`} 
         height={`${this.props.width}mm`} 
-        viewBox="0 0 100 100">
+        viewBox="0 0 100 100" >
 
         <defs>
           <pattern id="img1" patternUnits="userSpaceOnUse" width="100" height="100">
@@ -265,7 +252,8 @@ export class CustomSVG extends React.Component {
                   contentEditable="true"
                   suppressContentEditableWarning
                   onBlur={this.props.changeText.bind(this, this.props.id)}
-                  className="inner-label-text" >
+                  className="inner-label-text"
+                  onClick={this.props.openTextPanel} >
                     {this.props.name}
                 </text>
             </div>

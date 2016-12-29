@@ -4,10 +4,16 @@ import Horseman from 'node-horseman'
 const saveDesign = (req, res) => {
 
     const id = req.body._id
+    const authorId = req.user._id
+    const designData = req.body
+    designData.author = authorId
+
+    console.log('AUTHOR ID')
+    console.log(authorId)
 
     // UPDATE IF HAS AN ID
     if (typeof id !== "undefined") {
-      Design.findByIdAndUpdate(id, req.body, {}, function(err) {
+      Design.findByIdAndUpdate(id, designData, {}, function(err) {
         console.log(err)
         takeDesignScreenshot(id)
         generateDesignPdf(id)
@@ -16,9 +22,8 @@ const saveDesign = (req, res) => {
 
     // INSERT IF DOESN'T HAVE AN ID
     else {
-      const newDesign = new Design(req.body)
+      const newDesign = new Design(designData)
       newDesign.save(function(err, design) {
-        console.log(err)
         console.log('Inserted design with id:', design._id)
         takeDesignScreenshot(design._id)
         generateDesignPdf(design._id)

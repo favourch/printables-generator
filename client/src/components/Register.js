@@ -11,6 +11,7 @@ class Register extends Component {
     this.state = {
       firstName: '',
       email: '',
+      username: '',
       password: '',
       confirmPassword: '',
       errors: false
@@ -34,6 +35,7 @@ class Register extends Component {
     axios.post('/api/register', {
       firstName: this.state.firstName,
       email: this.state.email,
+      username: this.state.username,
       password: this.state.password,
       confirmPassword: this.state.confirmPassword
     })
@@ -71,13 +73,17 @@ class Register extends Component {
           }
 
           <form className="login-form">
-          	<div className="input-group">
-          		<label>First name</label>
-          		<input type="text" name="firstName" className="form-control" placeholder="First name" value={this.state.firstName} onChange={this.changeValue} />
-          	</div>
+            <div className="input-group">
+              <label>Username</label>
+              <input type="text" name="username" className="form-control" placeholder="Username" value={this.state.username} onChange={this.changeValue} />
+            </div>
             <div className="input-group">
               <label>Email</label>
               <input type="email" name="email" className="form-control" placeholder="Email" value={this.state.email} onChange={this.changeValue} />
+            </div>
+            <div className="input-group">
+              <label>First name</label>
+              <input type="text" name="firstName" className="form-control" placeholder="First name" value={this.state.firstName} onChange={this.changeValue} />
             </div>
             <div className="input-group">
               <label>Password</label>

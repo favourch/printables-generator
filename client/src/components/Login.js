@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Template from './infrastracture/Template'
-import axios from 'axios'
+import { loginUser } from './infrastracture/utils'
 
 class Login extends Component {
 
@@ -8,11 +8,12 @@ class Login extends Component {
     super(props)
 
     this.state = {
-      email: '',
+      username: '',
       password: ''
     }
 
-    this.loginUser = this.loginUser.bind(this)
+    this.login = this.login.bind(this)
+    this.checkSubmit = this.checkSubmit.bind(this)
     this.changeValue = this.changeValue.bind(this)
   }
 
@@ -23,18 +24,15 @@ class Login extends Component {
     this.setState(state)
   }
 
-  loginUser() {
+  login() {
+    loginUser(this.state.username, this.state.password)
+  }
 
-    axios.post('/api/login', {
-      email: this.state.email,
-      password: this.state.password,
-    })
-    .then(response => {
-      console.log(response.data);
-    })
-    .catch(error => {
-      console.log(error);
-    })
+  // send the form if the enter is pressed
+  checkSubmit(event) {
+    if (event.which === 13 || event.keyCode === 13) {
+      loginUser(this.state.username, this.state.password)
+    }
   }
 
   render() {
@@ -54,16 +52,16 @@ class Login extends Component {
             <div className="alert alert-success" role="alert">You have been registered. Please log in.</div>
           }
 
-          <form className="login-form">
+          <form onKeyPress={ this.checkSubmit } className="login-form">
             <div className="input-group">
-              <label>Email</label>
-              <input type="email" name="email" className="form-control" placeholder="Email" value={this.state.email} onChange={this.changeValue} />
+              <label>Username</label>
+              <input type="text" name="username" className="form-control" placeholder="Username" value={this.state.username} onChange={this.changeValue} />
             </div>
             <div className="input-group">
               <label>Password</label>
               <input type="password" name="password" className="form-control" placeholder="Password" value={this.state.password} onChange={this.changeValue} />
             </div>
-            <button type="button" onClick={ this.loginUser } className="form-control btn btn-primary">Login</button>
+            <button type="button" onClick={ this.login } className="form-control btn btn-primary">Login</button>
           </form>
         </div>
       </Template>
