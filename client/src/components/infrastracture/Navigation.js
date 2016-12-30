@@ -10,6 +10,7 @@ class Navigation extends Component {
     super(props)
 
     this.state = {
+      loggedIn: false,
       userId: '',
       username: '',
       email: '',
@@ -28,6 +29,7 @@ class Navigation extends Component {
 		    console.log('GOT THE CURRENT USER')
 		    console.log(response)
 		    this.setState({
+		    	loggedIn: true,
 		        userId: response.data._id,
 		        username: response.data.username,
 		        email: response.data.email,
@@ -51,24 +53,35 @@ class Navigation extends Component {
 	            <Navbar.Toggle />
 	          </Navbar.Header>
 	          <Navbar.Collapse>
-	            <Nav>
-	              <li><Link to="/" activeClassName="active">Home</Link></li>
-	              <li><Link to="/browse" activeClassName="active">Browse projects</Link></li>
-	              <li><Link to={`/users/${this.state.username}`} activeClassName="active">My profile</Link></li>
-	              <li><Link to="/create" activeClassName="active">Create new project</Link></li>
-	              <li><Link to="/register" activeClassName="active">Register</Link></li>
-	              <li><Link to="/login" activeClassName="active">Login</Link></li>
-	              <li><Link to="/settings" activeClassName="active">Settings</Link></li>
-	            </Nav>
-	            <Nav pullRight>
-	              <div className="profile-picture"></div>
-	              <NavDropdown title={name} id="basic-nav-dropdown">
-	                <MenuItem><Link to={`/users/${this.state.username}`}>My profile</Link></MenuItem>
-	                <MenuItem><Link to="/settings">Settings</Link></MenuItem>
-	                <MenuItem divider />
-	                <MenuItem onClick={ () => logoutUser() }>Logout</MenuItem>
-	              </NavDropdown>
-	            </Nav>
+	          	{ this.state.loggedIn &&
+		            <Nav>
+		              <li><Link to="/browse" activeClassName="active">Browse projects</Link></li>
+		              <li><Link to={`/users/${this.state.username}`} activeClassName="active">My profile</Link></li>
+		              <li><Link to="/create" activeClassName="active">Create new project</Link></li>
+		            </Nav>
+	        	}
+	        	{ this.state.loggedIn === false &&
+	        		<div>
+		        		<Nav>
+			              <li><Link to="/browse" activeClassName="active">Browse projects</Link></li>
+			            </Nav>
+			            <Nav pullRight>
+			              <li><Link to="/register" activeClassName="active">Register</Link></li>
+			              <li><Link to="/login" activeClassName="active">Login</Link></li>
+			            </Nav>
+		            </div>
+	        	}
+	            { this.state.loggedIn &&
+		            <Nav pullRight>
+		              <div className="profile-picture"></div>
+		              <NavDropdown title={name} id="basic-nav-dropdown">
+		                <MenuItem><Link to={`/users/${this.state.username}`}>My profile</Link></MenuItem>
+		                <MenuItem><Link to="/settings">Settings</Link></MenuItem>
+		                <MenuItem divider />
+		                <MenuItem onClick={ () => logoutUser() }>Logout</MenuItem>
+		              </NavDropdown>
+		            </Nav>
+	        	}
 	          </Navbar.Collapse>
 	        </Navbar>
 		)

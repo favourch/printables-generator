@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
-import Template from '../infrastracture/Template'
-import Label from './Label'
-import Sidebar from './Sidebar'
+import Template from './infrastracture/Template'
+import Label from './Create/Label'
 import axios from 'axios'
-import { showMessage } from '../infrastracture/utils'
 import WebFont from 'webfontloader'
 import { browserHistory } from 'react-router'
-
 
 class Create extends Component {
 
@@ -78,7 +75,6 @@ class Create extends Component {
     if (typeof designId !== "undefined") {
       axios.get('/api/design/'+designId)
       .then(response => {
-        console.log('FOUND THE DESIGN')
         console.log(response)
         this.setState({
             _id: response.data._id,
@@ -97,7 +93,7 @@ class Create extends Component {
         });
       })
       .catch(function (error) {
-        browserHistory.push('/404')
+        // browserHistory.push('/404')
       })
     }
 
@@ -370,27 +366,7 @@ class Create extends Component {
       design: design
     })
   }
-
-// Save the design
-
-  saveDesign() {
-    const design = {
-      _id: this.state._id,
-      title: this.state.title,
-      description: this.state.description,
-      visibility: this.state.visibility,
-      design: this.state.design,
-      labels: this.state.labels
-    }
-
-    axios.post('/api/design/save', design)
-    .then(response => {
-      showMessage('success', 'The design has been saved.')
-    })
-    .catch(error => {
-      showMessage('error', 'Something went wrong.')
-    })
-  }
+  
 
   render() {
 
@@ -398,24 +374,7 @@ class Create extends Component {
 
     <Template width="full" loaderText="Label generator is loading...">
 
-      <Sidebar 
-        openPanel={this.state.openPanel}
-        changeOpenPanel={this.changeOpenPanel}
-        changeShape={this.changeShape}
-        handleColorChange={this.handleColorChange}
-        changeBackgroundImage={this.changeBackgroundImage}
-        changeBorderValue={this.changeBorderValue}
-        handleBorderColorChange={this.handleBorderColorChange}
-        deleteSelected={this.deleteSelected}
-        changeProjectSettings={this.changeProjectSettings}
-        changeValue={this.changeValue}
-        changeTextStyle={this.changeTextStyle}
-        changeTextAlign={this.changeTextAlign}
-        changeFont={this.changeFont}
-        {...this.state}
-      />
-
-      <div className="workcontent">
+      <div className="workcontent no-sidebar">
 
         <div className="action-buttons">
           <button className="btn btn-primary"><span className="lnr lnr-undo"></span></button>
@@ -425,7 +384,7 @@ class Create extends Component {
           <button className="btn btn-primary" onClick={() => this.zoomOut()}><span className="lnr lnr-circle-minus"></span></button>
 
           <div className="pull-right">
-            <button className="btn btn-primary" onClick={() => this.saveDesign()}><span className="lnr lnr-cloud-upload"></span> Save</button>
+            <button className="btn btn-primary" disabled><span className="lnr lnr-cloud-upload"></span> Save</button>
             <button className="btn btn-primary printButton" onClick={this.printDocument}><span className="lnr lnr-printer"></span>  Print</button>
             <button className="btn btn-primary"><span className="lnr lnr-download"></span> Download</button>
           </div>

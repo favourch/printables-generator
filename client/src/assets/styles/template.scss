@@ -1,6 +1,13 @@
 body {
 	font-family: 'Proxima Nova';
 	background-color: transparent;
+	height: 100%;
+}
+
+.app-content {
+	min-height: 100vh;
+	position: absolute;
+	width: 100%;
 }
 
 .wrapper {
@@ -132,6 +139,27 @@ nav ul {
 	}
 }
 
+.load-more {
+	margin-top: 30px;
+}
+
+.btn.btn-white {
+	border: 1px solid #ddd;
+    padding: 8px 23px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 11px;
+    background-color: #fff;
+    color: #919bad;
+    border-radius: 3px;
+
+    &:hover {
+		background-color: #f7f7f7 !important;
+		border-color: #ddd;
+		transition: 0.2s;
+	}
+}
+
 .dropzone-preview {
 	width: 200px;
     height: 200px;
@@ -167,4 +195,46 @@ nav ul {
 		float: right;
 	}
 }
+
+.page-title {
+	padding-top: 30px;
+    margin-bottom: 20px;
+    font-weight: 400;
+    font-size: 26px;
+    color: #585d65;
+}
+
+.tags {
+	padding-bottom: 20px;
+	width: 75%;
+
+	.tag {
+		float: left;
+	    border: 1px solid #ddd;
+	    padding: 8px 23px;
+	    margin-right: 5px;
+	    text-transform: uppercase;
+	    letter-spacing: 0.5px;
+	    font-size: 11px;
+	    background-color: #fff;
+	    color: #919bad;
+	    cursor: pointer;
+	    border-radius: 3px;
+
+		&:hover {
+			color: #585d65;
+		}
+	}
+}
+
+.browse-search {
+	width: 25%;
+}
+
+.browse-filters {
+	display: flex;
+}
+
+
+
 

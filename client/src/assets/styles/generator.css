@@ -63,6 +63,11 @@ a {
   top: 85px;
   position: absolute;
   width: calc(100% - 370px); }
+  .workcontent.no-sidebar {
+    width: 100%;
+    margin-left: 0px; }
+    .workcontent.no-sidebar .action-buttons {
+      width: 100%; }
 
 .option-grid {
   display: flex;

@@ -75,6 +75,15 @@ a {
     top: 85px;
     position: absolute;
     width: calc(100% - 370px);
+
+    &.no-sidebar {
+    	width: 100%;
+    	margin-left: 0px;
+
+    	.action-buttons {
+    		width: 100%;
+    	}
+    }
 }
 
 

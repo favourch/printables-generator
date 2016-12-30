@@ -7,6 +7,7 @@ import User from './models/user';
 import Design from './models/design';
 import bcrypt from 'bcryptjs';
 import cloudinary from 'cloudinary';
+import { dynamicSort } from './utils';
 
 import Bluebird from 'bluebird';
 mongoose.Promise = Bluebird.Promise;
@@ -115,28 +116,48 @@ router.post('/design/save', (req, res) => {
   saveDesign(req, res);
 })
 
-// Get all designs
+
+// Get all designs with author
 router.get('/designs', (req, res) => {
-	Design.find(function(err, designs) {
-		res.send(designs)
-	})
+
+	Design.find({}, 
+		'id title description authorId created', 
+		function(err, designs) {
+		var newDesigns = []
+
+		designs.forEach(function(design) {
+			var authorId = design.authorId
+			User.findOne({ '_id': authorId }, '_id username firstName lastName', function(err, author) {
+				design.author = author
+				newDesigns.push(design)
+
+				if (newDesigns.length === designs.length) {
+					newDesigns.sort(dynamicSort('-created'))
+					res.send(newDesigns)
+				}
+			})
+		})
+	}).sort({'created': -1})
+	// .limit(15)
+
 })
 
 // Get designs by user
 router.get('/designs/user/:userId', (req, res) => {
 	const userId = req.params.userId;
-	Design.find({ 'author': userId }, function (err, designs) {
+	Design.find({ 'authorId': userId }, function (err, designs) {
 	  if (err) return console.error(err);
 	  console.log(designs)
 	  res.send(designs)
-	})
+	}).sort({'created': -1})
 })
 
 // Get design by id
 router.get('/design/:designId', (req, res) => {
 	const designId = req.params.designId
+	console.log('get design by id', designId)
 	Design.findOne({ _id: designId }, function (err, response) {
-	  if (err) return console.error(err);
+	  if (err) return res.sendStatus(404);
 	  res.send(response)
 	})
 })
@@ -157,34 +178,38 @@ router.post('/upload-image', (req, res) => {
         { public_id: "john_doe_1001" });
 })
 
-// router.post('/user/change-profile-picture', (req, res) => {
-// 	console.log('USER', req.user.username, 'is trying to change profile picture')
-// 	console.log('FILES')
-// 	const data = req.body
-// 	console.log(data)
-// 	res.send(data)
-// 	// cloudinary.uploader.upload(
-// 	// 	'https://cloudinary.com/images/logo-white.png', 
-// 	// 	function(result) { 
-// 	// 		console.log(result) }, 
-//  //        { public_id: "john_doe_1001" });
-// })
 
-router.put('/user/change-profile-picture', (req, res) => {
+router.post('/user/change-profile-picture', function(req, res) {
 	console.log('USER', req.user.username, 'is trying to change profile picture')
-	console.log('REQUEST IS:')
-	console.log(req)
-	console.log('FILES')
-	const data = req.body
-	console.log(data)
-	res.send(data)
-	// cloudinary.uploader.upload(
-	// 	'https://cloudinary.com/images/logo-white.png', 
-	// 	function(result) { 
-	// 		console.log(result) }, 
- //        { public_id: "john_doe_1001" });
-})
+	var userId = req.user.id
+ 
+    if (!req.files) {
+        res.send('No files were uploaded.');
+        return;
+    }
 
+    var uploadedFile = req.files.image
+    console.log('File path' + uploadedFile.path)
+    console.log('FILES')
+    console.log(uploadedFile)
+
+	// cloudinary.uploader.upload(
+	// 	uploadedFile, 
+	// 	function(result) { console.log('Result of uploading: ' + result) }, 
+ //        { public_id: 'users/p-'+userId })
+
+	res.send(uploadedFile)
+ 
+    // sampleFile = req.files.sampleFile;
+    // sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
+    //     if (err) {
+    //         res.status(500).send(err);
+    //     }
+    //     else {
+    //         res.send('File uploaded!');
+    //     }
+    // });
+});
 
 
 export default router;

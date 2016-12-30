@@ -3,9 +3,9 @@ import { Router, Route, browserHistory } from 'react-router'
 import { cloudinaryConfig } from 'react-cloudinary'
 import cloudinary from 'cloudinary'
 import axios from 'axios'
-import Home from './components/Home'
 import Browse from './components/Browse'
 import Create from './components/Create'
+import Preview from './components/Preview'
 import PageNotFound from './components/PageNotFound'
 import Register from './components/Register'
 import Login from './components/Login'
@@ -34,17 +34,19 @@ class App extends Component {
   render() {
     return (
       <Router history={browserHistory} onUpdate={() => window.scrollTo(0, 0)}>
-        <Route path='/' component={ Home } />
-        <Route path='/browse' component={ Browse } onEnter={ requireAuth } />
-        <Route path='/create' component={ Create }>
+        <Route path='/' component={ Browse } />
+        <Route path='/browse' component={ Browse } />
+        <Route path='/preview/:designId' component={ Preview } />
+        <Route path='/create' component={ Create } onEnter={ requireAuth }>
           <Route path="/create/:designId" component={ Create } />
         </Route>
-        <Route path='/users' component={ UserProfile } onEnter={ requireAuth }>
+        <Route path='/users' component={ UserProfile }>
           <Route path="/users/:username" component={ UserProfile } />
         </Route>
         <Route path='/settings' component={ UserSettings } onEnter={ requireAuth } />
         <Route path='/register' component={ Register } />
         <Route path='/login' component={ Login } />
+        <Route path='/404' component={ PageNotFound } />
         <Route path='*' component={ PageNotFound } />
       </Router>
     );

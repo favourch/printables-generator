@@ -59,35 +59,26 @@ class UserSettings extends Component {
     var data = new FormData()
     data.append('file', files[0])
 
-    axios.put('/api/user/change-profile-picture', data)
+    axios.post('/api/user/change-profile-picture', data)
       .then(response => {
+        console.log('AFTER AXIOS POST')
         console.log(response)
         console.log(response.data)
       })
       .catch(console.error)
-
-    // axios.post('/api/user/change-profile-picture', files[0],  {
-    //   headers: {
-    //     'Content-Type': files[0].type
-    //   }
-    // })
-    //   .then(response => {
-    //     console.log(response)
-    //   })
-    //   .catch(console.error);
   }
 
   saveSettings() {
     console.log('save settings')
     console.log(this.state.files)
     console.log(this.state.files[0])
-    const settings = {
-      username: this.state.username, 
-      email: this.state.email, 
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      bio: this.state.bio
-    }
+    // const settings = {
+    //   username: this.state.username, 
+    //   email: this.state.email, 
+    //   firstName: this.state.firstName,
+    //   lastName: this.state.lastName,
+    //   bio: this.state.bio
+    // }
   }
 
   render() {
@@ -115,14 +106,14 @@ class UserSettings extends Component {
           </div>
           <div className="input-group">
             <label>Bio</label>
-            <textarea className="form-control" name="bio" value={this.state.bio} />
+            <textarea className="form-control" name="bio" value={this.state.bio} placeholder="Your profile description" />
           </div>
           <div className="input-group">
             <label>Profile picture</label>
             <div className="dropzone-with-preview">
               {this.state.files && 
                 <div className="dropzone-preview">
-                  {this.state.files.map((file) => <img key="1" src={file.preview} />)}
+                  {this.state.files.map((file) => <img key="1" alt="presentation" src={file.preview} />)}
                 </div>
               }
               <Dropzone onDrop={this.onDrop} multiple={false}>

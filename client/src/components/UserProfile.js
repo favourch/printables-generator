@@ -7,29 +7,28 @@ import ProjectPreview from './infrastracture/ProjectPreview'
 class UserProfile extends Component {
 
   state = {
-      userId: '',
-      username: this.props.params.username,
-      firstName: '',
-      lastName: '',
+      user: {},
       designs: [],
     }
 
 	componentDidMount() {
 
     const username = this.props.params.username
-    console.log('COMPONENT MOUNTED', username)
 
 		// Get user data from the API
     axios.get('/api/users/'+username)
       .then(response => {
+        const author = response.data
         this.setState({
-            userId: response.data._id,
-            firstName: response.data.firstName,
-            lastName: response.data.lastName
+            user: author
         })
         // Get the designs from the API  
         axios.get('/api/designs/user/'+response.data._id)
           .then(response => {
+            const designs = response.data
+            designs.forEach(function(design) {
+              design.author = author
+            })
             this.setState({
                 designs: response.data
             })
@@ -57,10 +56,10 @@ class UserProfile extends Component {
           <div className="profile-header-content">
             <div className="profile-picture"></div>
             <div className="profile-title">
-              <h2>@{this.state.username}</h2>
-            	<h1>{this.state.firstName} {this.state.lastName}</h1>
+              <h2>@{this.state.user.username}</h2>
+            	<h1>{this.state.user.firstName} {this.state.user.lastName}</h1>
             </div>
-          	<Link to="create"><button type="button" className="btn btn-success">Follow @{this.state.username}</button></Link>
+          	<Link to="create"><button type="button" className="btn btn-success">Follow @{this.state.user.username}</button></Link>
           </div>
         </div>
         <div className="profile-header-bar">

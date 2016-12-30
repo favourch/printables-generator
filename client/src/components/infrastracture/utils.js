@@ -44,9 +44,11 @@ export function logoutUser() {
     .then(response => {
       console.log(response)
       browserHistory.push('/login')
+      localStorage.userId = null
     })
     .catch(error => {
       console.log(error)
       browserHistory.push('/login')
+      localStorage.userId = null
     })
 }
