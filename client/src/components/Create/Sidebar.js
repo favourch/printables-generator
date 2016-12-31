@@ -50,12 +50,9 @@ class Sidebar extends React.Component {
               <textarea className="form-control" name="description" value={this.props.description} onChange={this.props.changeProjectSettings}></textarea>
             </div>
 
-            <div className="form-group">
-              <label>Visibility</label>
-              <select id="visibility" className="form-control">
-                <option value="public" selected>Public</option>
-                <option value="private">Private</option>
-              </select>
+            <div className="form-group danger-zone">
+              <label>Delete label</label>
+              <button className="btn btn-danger" onClick={this.props.showConfirmModal}><span className="lnr lnr-trash"></span> Delete</button>
             </div>
 
           </Panel>
@@ -121,6 +118,7 @@ class Sidebar extends React.Component {
                                   <option value="dotted">dotted</option>
                                 </select>
                               </div>
+                              { /*
                               <div className="flex-input-item">
                                 {index >= 1 &&
                                   <div className="border-button">
@@ -133,6 +131,7 @@ class Sidebar extends React.Component {
                                   </div>
                                 }
                               </div>
+                              */}
                             </div>
                 })
               }

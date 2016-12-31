@@ -64,6 +64,7 @@ class Navigation extends Component {
 	        		<div>
 		        		<Nav>
 			              <li><Link to="/browse" activeClassName="active">Browse projects</Link></li>
+			              <li><Link to="/create" activeClassName="active">Create new project</Link></li>
 			            </Nav>
 			            <Nav pullRight>
 			              <li><Link to="/register" activeClassName="active">Register</Link></li>

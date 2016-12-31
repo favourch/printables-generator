@@ -544,3 +544,10 @@ label {
   border-top: 1px solid #f4f4f4;
   text-align: center;
   padding: 20px 0px; }
+
+.danger-zone .btn {
+  display: block; }
+
+.btn-danger {
+  background-color: #e45454;
+  border: 0px; }

@@ -207,7 +207,6 @@
     z-index: 9999;
     width: 960px;
     height: 80vh;
-    overflow: hidden;
     top: 10vh;
     left: calc(50vw - 480px);
     border-radius: 10px;
@@ -228,6 +227,7 @@
 	width: 70%;
 	height: 80vh;
     overflow: scroll;
+    border-radius: 10px;
 
 	img {
 		max-width: 100%; 
@@ -264,3 +264,21 @@
     	}
     }
 }
+
+.design-nav {
+	position: absolute;
+    margin-top: 40vh;
+    z-index: 9999999;
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+
+    &.previous {
+		margin-left: -40px;
+    }
+
+    &.next {
+		right: -40px;
+    }
+}
+

@@ -14,6 +14,7 @@ mongoose.Promise = Bluebird.Promise;
 
 import registerUser from './controllers/users/registerUser';
 import loginUser from './controllers/users/loginUser';
+import updateSettings from './controllers/users/updateSettings';
 import saveDesign from './controllers/designs/saveDesign';
 
 import { comparePassword } from './models/user';
@@ -51,6 +52,11 @@ router.get('/user/currentUser', (req, res) => {
 	} else {
 		res.sendStatus(401)
 	}
+})
+
+// Update user settings
+router.post('/user/update-settings', (req, res) => {
+  updateSettings(req, res);
 })
 
 // Register new user

@@ -37,7 +37,6 @@ nav ul {
 
 
 .login-form {
-	width: 640px;
 
 	.input-group {
 		margin-bottom: 15px;
@@ -235,6 +234,16 @@ nav ul {
 	display: flex;
 }
 
+.white-box {
+	background-color: #fff;
+    padding: 30px;
+    top: 40px;
+    position: relative;
+    border-radius: 10px;
+    border: 1px solid #eee;
 
-
+    h1 {
+    	margin-top: 0px;
+    }
+}
 

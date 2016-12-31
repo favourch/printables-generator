@@ -77,7 +77,11 @@ class UserProfile extends Component {
             <ProjectPreview 
               key={design._id}
               title={design.title}
+              description={design.description}
+              author={design.author}
               id={design._id}
+              index={this.state.designs.indexOf(design)}
+              designsArray={this.state.designs}
               {...design} />
           )}
 

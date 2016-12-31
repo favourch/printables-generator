@@ -18,7 +18,8 @@ export default class ProjectPreview extends React.Component {
 
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
-    this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.nextDesign = this.nextDesign.bind(this)
+    this.previousDesign = this.previousDesign.bind(this)
   }
 
   openModal() {
@@ -33,12 +34,22 @@ export default class ProjectPreview extends React.Component {
     })
   }
 
-  handleKeyPress(e) {
-    console.log('handle key press')
+  nextDesign() {
+    if (this.state.index < this.state.array.length-1) {
+      this.setState({
+        design: this.state.array[this.state.index+1],
+        index: this.state.index+1
+      })
+    }
   }
 
-  componentDidMount() {
-    console.log('console mounted')
+  previousDesign() {
+    if (this.state.index > 0) {
+      this.setState({
+        design: this.state.array[this.state.index-1],
+        index: this.state.index-1
+      })
+    }
   }
 
   render() {
@@ -46,43 +57,22 @@ export default class ProjectPreview extends React.Component {
     const authorPicture = cloudinary.url('users/'+this.state.design.author._id, {width: 100, height: 100, crop: "fill"})
 
     const keyMap = {
-      'deleteNode': ['del', 'backspace'],
-      'moveUp': ['up', 'w'],
       'escape': ['esc', 'q'],
       'next': ['right', 'd'],
       'previous': ['left', 'a']
     }
 
     const handlers = {
-      'deleteNode': (event) => console.log('Delete node hotkey called!'),
-      'moveUp': (event) => console.log('Move up hotkey called!'),
       'escape': (event) => {
-        console.log('Close the modal')
         this.setState({
           modalVisible: false
         })
       },
       'next': (event) => {
-        console.log('Next design')
-        console.log(this.state.array)
-        console.log(this.state.index)
-        if (this.state.index < this.state.array.length) {
-          this.setState({
-            design: this.state.array[this.state.index+1],
-            index: this.state.index+1
-          })
-        }
+        this.nextDesign()
       },
       'previous': (event) => {
-        console.log('Previous design')
-        console.log(this.state.array)
-        console.log(this.state.index)
-        if (this.state.index > 0) {
-          this.setState({
-            design: this.state.array[this.state.index-1],
-            index: this.state.index-1
-          })
-        }
+        this.previousDesign()
       }
     }
 
@@ -114,6 +104,8 @@ export default class ProjectPreview extends React.Component {
             <div>
               <div className="design-item-modal-bg" onClick={ this.closeModal }></div>
               <div className="design-item-modal">
+                <div className="previous design-nav" onClick={ this.previousDesign }><span className="lnr lnr-chevron-left"></span></div>
+                <div className="next design-nav" onClick={ this.nextDesign }><span className="lnr lnr-chevron-right"></span></div>
                 <div className="design-item-modal-content">
                   <div className="design-image-big">
                     <img alt="presentation" src={`/img/designs/${design._id}.jpg`} />

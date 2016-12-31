@@ -3,7 +3,7 @@ import Template from './infrastracture/Template'
 import Label from './Create/Label'
 import axios from 'axios'
 import WebFont from 'webfontloader'
-import { browserHistory } from 'react-router'
+// import { browserHistory } from 'react-router'
 
 class Create extends Component {
 
