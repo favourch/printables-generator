@@ -3,6 +3,7 @@ import Template from './infrastracture/Template'
 import { Link } from 'react-router'
 import axios from 'axios'
 import ProjectPreview from './infrastracture/ProjectPreview'
+import cloudinary from 'cloudinary'
 
 class UserProfile extends Component {
 
@@ -51,10 +52,10 @@ class UserProfile extends Component {
     return (
       <Template backgroundColor="#f9f9f9">
 
-        <div className="profile-header">
+        <div className="profile-header" style={{backgroundImage: 'url('+cloudinary.url('users/cover-'+this.state.user._id+'.jpg', {width: 960, height: 300, crop: "fill", version: '999'})+')'}}>
           <div className="profile-header-overlay"></div>
           <div className="profile-header-content">
-            <div className="profile-picture"></div>
+            <div className="profile-picture" style={{backgroundImage: 'url('+cloudinary.url('users/'+this.state.user._id+'.jpg', {width: 300, height: 300, crop: "fill", version: '999'})+')'}}></div>
             <div className="profile-title">
               <h2>@{this.state.user.username}</h2>
             	<h1>{this.state.user.firstName} {this.state.user.lastName}</h1>
@@ -68,6 +69,9 @@ class UserProfile extends Component {
             <li><a href="#">Projects</a></li>
             <li><a href="#">Following (20)</a></li>
             <li><a href="#">Followers (20)</a></li>
+            <li className="pull-right"><a href="#">
+              <div className="rating">Points: <i className="lnr lnr-diamond"></i> {this.state.user.points}</div>
+            </a></li>
           </ul>
         </div>
 

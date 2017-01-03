@@ -70,6 +70,9 @@ nav ul {
   #notifications .alert-type {
     font-weight: 700;
     text-transform: capitalize; }
+  #notifications .alert-error {
+    background-color: #ef7572;
+    color: #fff; }
 
 .btn {
   border-radius: 0px;
@@ -183,3 +186,52 @@ nav ul {
   border: 1px solid #eee; }
   .white-box h1 {
     margin-top: 0px; }
+
+.buttons-center {
+  display: table;
+  width: auto;
+  margin: auto; }
+  .buttons-center .btn {
+    margin: 0px 10px;
+    padding: 0px 30px; }
+
+.top-users {
+  display: flex;
+  flex-wrap: wrap; }
+  .top-users .design-author {
+    background-color: #fff;
+    box-shadow: 0px -1px 6px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    width: 31.25%;
+    margin-right: 1.5%;
+    margin-left: 1.5%;
+    margin-bottom: 30px; }
+    .top-users .design-author:nth-child(3n-2) {
+      margin-left: 0px; }
+    .top-users .design-author:nth-child(3n) {
+      margin-right: 0px; }
+    .top-users .design-author .author {
+      float: left;
+      font-size: 14px;
+      padding-top: 1px; }
+    .top-users .design-author .rating-position {
+      float: left;
+      width: 40px;
+      font-size: 26px;
+      color: grey;
+      margin-top: 14px;
+      margin-right: 5px; }
+    .top-users .design-author .profile-picture {
+      width: 60px;
+      height: 60px; }
+    .top-users .design-author .username {
+      color: #9da1ad;
+      font-weight: 400;
+      font-size: 12px;
+      margin-top: 1px;
+      margin-bottom: 4px; }
+    .top-users .design-author .hash {
+      font-size: 22px;
+      color: #ddd;
+      margin-right: 2px; }

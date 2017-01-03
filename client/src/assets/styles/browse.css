@@ -26,7 +26,10 @@
   width: 30%; }
   .design-downloads .likes {
     width: 50%;
-    float: left; }
+    float: left;
+    cursor: pointer; }
+    .design-downloads .likes:hover {
+      color: #ff7680; }
 
 .design-image {
   border-top-left-radius: 10px;
@@ -73,7 +76,8 @@
         font-size: 15px;
         position: relative;
         top: 2px;
-        color: #4cd8ba; }
+        color: #4cd8ba;
+        padding-left: 0px; }
   .design-author .profile-picture {
     float: left;
     margin: 0px;
@@ -201,6 +205,12 @@
       height: 34px;
       font-size: 13px;
       padding: 2px 10px; }
+  .design-modal-details .date {
+    color: #aeb3bf;
+    font-size: 12px;
+    margin-bottom: 10px; }
+    .design-modal-details .date .lnr {
+      padding-right: 5px; }
 
 .design-nav {
   position: absolute;
@@ -213,3 +223,14 @@
     margin-left: -40px; }
   .design-nav.next {
     right: -40px; }
+
+.rating {
+  font-weight: 400;
+  line-height: 16px;
+  color: #6c7b8c; }
+  .rating .lnr {
+    font-size: 15px;
+    position: relative;
+    top: 2px;
+    padding-left: 5px;
+    color: #4cd8ba; }

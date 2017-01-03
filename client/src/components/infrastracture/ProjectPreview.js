@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import cloudinary from 'cloudinary'
 import { HotKeys } from 'react-hotkeys'
+import axios from 'axios'
 
 
 export default class ProjectPreview extends React.Component {
@@ -20,6 +21,8 @@ export default class ProjectPreview extends React.Component {
     this.closeModal = this.closeModal.bind(this)
     this.nextDesign = this.nextDesign.bind(this)
     this.previousDesign = this.previousDesign.bind(this)
+    this.likeDesign = this.likeDesign.bind(this)
+    this.addDownload = this.addDownload.bind(this)
   }
 
   openModal() {
@@ -52,9 +55,34 @@ export default class ProjectPreview extends React.Component {
     }
   }
 
+  likeDesign() {
+    console.log('Like the design', this.state.design._id)
+
+    // Like the design
+    // axios.post('/api/designs/')
+    //   .then(response => {
+    //     console.log(response.data)
+    //   })
+    //   .catch(console.error);
+  }
+
+  addDownload() {
+    const design = {
+      id: this.state.design._id
+    }
+    axios.post('/api/design/add-download', design)
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(console.error);
+  }
+
   render() {
     const design = this.state.design
-    const authorPicture = cloudinary.url('users/'+this.state.design.author._id, {width: 100, height: 100, crop: "fill"})
+    const dateCreated = design.created.slice(0,16).replace('T', ' ')
+    const authorPicture = cloudinary.url('users/'+this.state.design.author._id, {width: 100, height: 100, crop: "fill", version: '999'})
+    const likesNumber = this.state.design.likes.length
+    const downloadsNumber = this.state.design.downloads
 
     const keyMap = {
       'escape': ['esc', 'q'],
@@ -86,26 +114,30 @@ export default class ProjectPreview extends React.Component {
             <div className="design-description">{this.props.description}</div>
             <div className="design-author">
               <Link to={`/users/${this.props.author.username}`}>
-                <div className="profile-picture" style={{backgroundImage: 'url('+cloudinary.url('users/'+this.props.author._id, {width: 100, height: 100, crop: "fill"})+')'}}></div>
+                <div className="profile-picture" style={{backgroundImage: 'url('+cloudinary.url('users/'+this.props.author._id, {width: 100, height: 100, crop: "fill", version: '999'})+'.jpg)'}}></div>
               </Link>
               <div className="author">
                 <Link to={`/users/${this.props.author.username}`}>
                   <div className="name">{this.props.author.firstName} {this.props.author.lastName}</div>
                 </Link>
-                <div className="rating"><i className="lnr lnr-diamond"></i> 1065</div>
+                <div className="rating"><i className="lnr lnr-diamond"></i> {this.props.author.points}</div>
               </div>
             </div>
             <div className="design-downloads">
-              <div className="likes"><span className="lnr lnr-heart"></span> 16</div>
-              <div className="downloads"><span className="lnr lnr-download"></span> 4</div>
+              <div className="likes" onClick={ this.likeDesign }><span className="lnr lnr-heart"></span> {likesNumber} </div>
+              <div className="downloads"><span className="lnr lnr-download"></span> {downloadsNumber} </div>
             </div>
           </div>
           { this.state.modalVisible &&
             <div>
               <div className="design-item-modal-bg" onClick={ this.closeModal }></div>
               <div className="design-item-modal">
-                <div className="previous design-nav" onClick={ this.previousDesign }><span className="lnr lnr-chevron-left"></span></div>
-                <div className="next design-nav" onClick={ this.nextDesign }><span className="lnr lnr-chevron-right"></span></div>
+                { this.state.index >= 1 &&
+                  <div className="previous design-nav" onClick={ this.previousDesign }><span className="lnr lnr-chevron-left"></span></div>
+                }
+                { this.state.index < this.state.array.length-1 &&
+                  <div className="next design-nav" onClick={ this.nextDesign }><span className="lnr lnr-chevron-right"></span></div>
+                }
                 <div className="design-item-modal-content">
                   <div className="design-image-big">
                     <img alt="presentation" src={`/img/designs/${design._id}.jpg`} />
@@ -113,26 +145,29 @@ export default class ProjectPreview extends React.Component {
                   <div className="design-modal-details">
                     <div className="design-author">
                       <Link to={`/users/${design.author.username}`}>
-                        <div className="profile-picture" style={{backgroundImage: 'url('+authorPicture+')'}}></div>
+                        <div className="profile-picture" style={{backgroundImage: 'url('+authorPicture+'.jpg)'}}></div>
                       </Link>
                       <div className="author">
                         <Link to={`/users/${design.author.username}`}>
                           <div className="name">{design.author.firstName} {design.author.lastName}</div>
                         </Link>
-                        <div className="rating"><i className="lnr lnr-diamond"></i> 1065</div>
+                        <div className="rating"><i className="lnr lnr-diamond"></i> {design.author.points}</div>
                       </div>
+                    </div>
+                    <div className="date">
+                      <span className="lnr lnr-clock"></span> { dateCreated }
                     </div>
                     <Link to={`/preview/${design._id}`}>
                       <div className="design-title">{design.title}</div>
                     </Link>
                     <div className="design-description">{design.description}</div>
                     <div className="design-downloads">
-                      <div className="likes"><span className="lnr lnr-heart"></span> 16</div>
-                      <div className="downloads"><span className="lnr lnr-download"></span> 4</div>
+                      <div className="likes" onClick={ this.likeDesign }><span className="lnr lnr-heart"></span> {likesNumber}</div>
+                      <div className="downloads"><span className="lnr lnr-download"></span> {downloadsNumber}</div>
                     </div>
                     <div className="design-actions">
                       <a href={`/img/designs/${design._id}.pdf`} target="_blank">
-                        <button className="btn btn-primary"><span className="lnr lnr-download"></span> Download</button>
+                        <button className="btn btn-primary" onClick={ this.addDownload }><span className="lnr lnr-download"></span> Download</button>
                       </a>
                       <Link to={`/preview/${design._id}`}>
                         <button className="btn btn-primary"><span className="lnr lnr-magic-wand"></span> Customize</button>

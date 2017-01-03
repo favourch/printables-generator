@@ -486,7 +486,6 @@ label {
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
-	background-image: url('https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/13232903_10206680230552931_146436648370127705_n.jpg?oh=2f990192e75387fa13985a8a886efacf&oe=58FBF64A');
 	background-size: cover;
 	background-position: center center;
 	float: left;
@@ -692,5 +691,24 @@ label {
 	background-color: #e45454;
 	border: 0px;
 }
+
+.font-selector {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	border: 1px solid grey;
+	border-radius: 5px;
+
+	li {
+		padding: 2px 5px;
+
+		&:hover {
+			background-color: grey;
+		}
+	}
+}
+
+
+
 
 

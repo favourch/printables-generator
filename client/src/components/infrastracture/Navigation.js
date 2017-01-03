@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { Navbar, Nav, NavDropdown, MenuItem } from 'react-bootstrap'
 import { logoutUser } from './utils'
 import axios from 'axios'
+import cloudinary from 'cloudinary'
 
 class Navigation extends Component {
 
@@ -48,7 +49,7 @@ class Navigation extends Component {
 	        <Navbar collapseOnSelect id="main-nav">
 	          <Navbar.Header>
 	            <Navbar.Brand>
-	              <a href="#">Design Me</a>
+	              <Link to="/" activeClassName="active">Design me</Link>
 	            </Navbar.Brand>
 	            <Navbar.Toggle />
 	          </Navbar.Header>
@@ -74,7 +75,7 @@ class Navigation extends Component {
 	        	}
 	            { this.state.loggedIn &&
 		            <Nav pullRight>
-		              <div className="profile-picture"></div>
+		              <div className="profile-picture" style={{backgroundImage: 'url('+cloudinary.url('users/'+this.state.userId+'.jpg', {width: 100, height: 100, crop: "fill", version: '999'})+')'}}></div>
 		              <NavDropdown title={name} id="basic-nav-dropdown">
 		                <MenuItem><Link to={`/users/${this.state.username}`}>My profile</Link></MenuItem>
 		                <MenuItem><Link to="/settings">Settings</Link></MenuItem>

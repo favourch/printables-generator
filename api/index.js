@@ -8,6 +8,8 @@ import Design from './models/design';
 import bcrypt from 'bcryptjs';
 import cloudinary from 'cloudinary';
 import { dynamicSort } from './utils';
+import multer from 'multer';
+var upload = multer({ dest: 'uploads/' })
 
 import Bluebird from 'bluebird';
 mongoose.Promise = Bluebird.Promise;
@@ -16,6 +18,8 @@ import registerUser from './controllers/users/registerUser';
 import loginUser from './controllers/users/loginUser';
 import updateSettings from './controllers/users/updateSettings';
 import saveDesign from './controllers/designs/saveDesign';
+import deleteDesign from './controllers/designs/deleteDesign';
+import addDownload from './controllers/designs/addDownload';
 
 import { comparePassword } from './models/user';
 
@@ -29,12 +33,26 @@ router.get('/', (req, res) => {
 })
 
 
+cloudinary.config({ 
+  cloud_name: 'bluecreative', 
+  api_key: '889448152855992', 
+  api_secret: 'jlYMNntJd5Aqe3jOzxlhfo2H0SA' 
+});
+
 // Get all users
 router.get('/users', (req, res) => {
 	User.find(function(err, users) {
 		res.send(users)
 	})
 })
+
+// Get all users
+router.get('/top-users', (req, res) => {
+	User.find(function(err, users) {
+		res.send(users)
+	}).sort({'points': -1})
+})
+
 
 // Get user by id
 router.get('/users/:username', (req, res) => {
@@ -58,6 +76,29 @@ router.get('/user/currentUser', (req, res) => {
 router.post('/user/update-settings', (req, res) => {
   updateSettings(req, res);
 })
+
+// Change user profile picture
+router.post('/user/upload-image', upload.single('file'), function (req, res, next) {
+	console.log('upload image userId', req.user._id)
+	console.log(req.file)
+	cloudinary.uploader.upload(
+		req.file.path, 
+		function(result) { 
+			console.log(result) }, 
+	    { public_id: 'users/'+req.user._id })
+})
+
+// Change user cover photo
+router.post('/user/upload-cover', upload.single('file'), function (req, res, next) {
+	console.log('upload image userId', req.user._id)
+	console.log(req.file)
+	cloudinary.uploader.upload(
+		req.file.path, 
+		function(result) { 
+			console.log(result) }, 
+	    { public_id: 'users/cover-'+req.user._id })
+})
+
 
 // Register new user
 router.post('/register', (req, res) => {
@@ -122,18 +163,28 @@ router.post('/design/save', (req, res) => {
   saveDesign(req, res);
 })
 
+// Delete design
+router.post('/design/delete', (req, res) => {
+  deleteDesign(req, res);
+})
+
+// Increase downloads
+router.post('/design/add-download', (req, res) => {
+  addDownload(req, res);
+})
+
 
 // Get all designs with author
 router.get('/designs', (req, res) => {
 
 	Design.find({}, 
-		'id title description authorId created', 
+		'id title description authorId created likes downloads', 
 		function(err, designs) {
 		var newDesigns = []
 
 		designs.forEach(function(design) {
 			var authorId = design.authorId
-			User.findOne({ '_id': authorId }, '_id username firstName lastName', function(err, author) {
+			User.findOne({ '_id': authorId }, '_id username firstName lastName points', function(err, author) {
 				design.author = author
 				newDesigns.push(design)
 
@@ -153,7 +204,7 @@ router.get('/designs/user/:userId', (req, res) => {
 	const userId = req.params.userId;
 	Design.find({ 'authorId': userId }, function (err, designs) {
 	  if (err) return console.error(err);
-	  console.log(designs)
+	  // console.log(designs)
 	  res.send(designs)
 	}).sort({'created': -1})
 })
@@ -168,11 +219,6 @@ router.get('/design/:designId', (req, res) => {
 	})
 })
 
-cloudinary.config({ 
-  cloud_name: 'bluecreative', 
-  api_key: '889448152855992', 
-  api_secret: 'jlYMNntJd5Aqe3jOzxlhfo2H0SA' 
-});
 
 // Upload image to cloudinary
 router.post('/upload-image', (req, res) => {
@@ -189,22 +235,33 @@ router.post('/user/change-profile-picture', function(req, res) {
 	console.log('USER', req.user.username, 'is trying to change profile picture')
 	var userId = req.user.id
  
-    if (!req.files) {
-        res.send('No files were uploaded.');
-        return;
-    }
+    // if (!req.files) {
+    //     res.send('No files were uploaded.');
+    //     return;
+    // }
 
-    var uploadedFile = req.files.image
-    console.log('File path' + uploadedFile.path)
-    console.log('FILES')
-    console.log(uploadedFile)
+    console.log('request body')
+    console.log(req.body)
+
+    console.log('request files')
+    console.log(req.files)
+
+	cloudinary.uploader.upload(
+		'https://cloudinary.com/images/logo-white.png', 
+		function(result) { 
+			console.log(result) }, 
+        { public_id: "john_doe_1001" });
+
+    // var uploadedFile = req.files.image
+    // console.log('File path' + uploadedFile.path)
+    // console.log('FILES')
+    // console.log(uploadedFile)
 
 	// cloudinary.uploader.upload(
 	// 	uploadedFile, 
 	// 	function(result) { console.log('Result of uploading: ' + result) }, 
  //        { public_id: 'users/p-'+userId })
 
-	res.send(uploadedFile)
  
     // sampleFile = req.files.sampleFile;
     // sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {

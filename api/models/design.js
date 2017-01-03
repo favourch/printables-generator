@@ -41,6 +41,14 @@ const designSchema = new Schema({
     created: {
       type: Date, 
       default: Date.now
+    },
+    likes: {
+      type: [String],
+      default: []
+    },
+    downloads: {
+      type: Number,
+      default: 0
     }
 })
 

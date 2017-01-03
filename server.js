@@ -5,7 +5,6 @@ import expressValidator from 'express-validator';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-import fileUpload from 'express-fileupload';
 
 const app = express();
 
@@ -29,9 +28,6 @@ app.use(session({
 // Parse post request body
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-
-// Get fileupload
-app.use(fileUpload())
 
 // Express Validator
 app.use(expressValidator({

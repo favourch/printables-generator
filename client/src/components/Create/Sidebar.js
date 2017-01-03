@@ -3,6 +3,7 @@ import cloudinary from 'cloudinary'
 import { PanelGroup, Panel } from 'react-bootstrap'
 import PopupColorPicker from './PopupColorPicker'
 import { SquareShape, CircleShape, BadgeShape, LabelShape, Shape3, Shape4 } from './Shapes'
+import FontSelector from './FontSelector'
 
 class Sidebar extends React.Component {
 
@@ -51,7 +52,7 @@ class Sidebar extends React.Component {
             </div>
 
             <div className="form-group danger-zone">
-              <label>Delete label</label>
+              <label>Delete project</label>
               <button className="btn btn-danger" onClick={this.props.showConfirmModal}><span className="lnr lnr-trash"></span> Delete</button>
             </div>
 
@@ -173,21 +174,21 @@ class Sidebar extends React.Component {
           <Panel header="Text" eventKey="4">
 
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-8">
                 <div className="form-group">
                   <label>Font family</label>
                   <select className="form-control" name="fontFamily" value={this.props.design.fontFamily} onChange={this.props.changeFont}>
                     {
                       this.props.availableFonts.map((font) => {
-                        return <option key={font.family} value={font.family}>{font.family}</option>
+                        return <option key={font.family} value={font.family} style={{fontFamily: 'Comic Sans'}}>{font.family}</option>
                       })
                     }
                   </select>
                 </div>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <div className="form-group">
-                  <label>Text color</label>
+                  <label>Color</label>
                   <PopupColorPicker color={ this.props.design.textColor } changeHandler={ this.props.handleColorChange.bind(this, 'textColor') } />
                 </div>
               </div>

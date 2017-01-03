@@ -47,7 +47,7 @@ class Create extends Component {
       },
       labels: [],
       availableFonts: [],
-      showConfirmModal: false
+      confirmModalVisible: false
     }
 
     this.changeValue = this.changeValue.bind(this)
@@ -70,6 +70,7 @@ class Create extends Component {
     this.deleteLabel = this.deleteLabel.bind(this)
     this.showConfirmModal = this.showConfirmModal.bind(this)
     this.closeConfirmModal = this.closeConfirmModal.bind(this)
+    this.deleteProject = this.deleteProject.bind(this)
   }
 
 
@@ -400,14 +401,30 @@ class Create extends Component {
   showConfirmModal() {
     console.log('Show confirm modal')
     this.setState({
-      showConfirmModal: true
+      confirmModalVisible: true
     })
   }
 
   closeConfirmModal() {
     console.log('Close confirm modal')
     this.setState({
-      showConfirmModal: false
+      confirmModalVisible: false
+    })
+  }
+
+  deleteProject() {
+    console.log('Delete the project')
+    const design = {
+      _id: this.state._id
+    }
+
+    axios.post('/api/design/delete', design)
+    .then(response => {
+      showMessage('success', 'The project has been deleted.')
+      browserHistory.push('/')
+    })
+    .catch(error => {
+      showMessage('error', 'Something went wrong.')
     })
   }
 
@@ -417,7 +434,10 @@ class Create extends Component {
 
     <Template width="full" loaderText="Label generator is loading...">
 
-      <ConfirmModal show={this.state.showConfirmModal} onHide={this.closeConfirmModal} />
+      <ConfirmModal 
+        show={this.state.confirmModalVisible} 
+        onHide={this.closeConfirmModal}
+        onConfirm={this.deleteProject} />
 
       <Sidebar 
         openPanel={this.state.openPanel}
@@ -500,23 +520,18 @@ class ConfirmModal extends React.Component {
     return (
       <Modal {...this.props} bsSize="small" aria-labelledby="contained-modal-title-sm">
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-sm">Modal heading</Modal.Title>
+          <Modal.Title id="contained-modal-title-sm">Delete project</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <h4>Wrapped Text</h4>
-          <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-          <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-          <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-          <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-          <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-          <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+        <Modal.Body className="text-center">
+          <h4>Are you sure you want to delete this project?</h4>
+          <p>This operation cannot be undone.</p>
+
+          <div className="buttons-center">
+            <Button onClick={this.props.onConfirm}>Yes</Button>
+            <Button onClick={this.props.onHide}>No</Button>
+          </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.onHide}>Close</Button>
-        </Modal.Footer>
+        
       </Modal>
     )
   }

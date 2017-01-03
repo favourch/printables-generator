@@ -40,23 +40,34 @@ class Browse extends Component {
           <input type="text" className="form-control browse-search" placeholder="Search for something..." />
         </div>
 
-        <div className="design-grid">
-          {this.state.designs.map(design => 
-            <ProjectPreview 
-              key={design._id}
-              title={design.title}
-              description={design.description}
-              author={design.author}
-              id={design._id}
-              index={this.state.designs.indexOf(design)}
-              designsArray={this.state.designs}
-              {...design} />
-          )}
-        </div>
+        { this.state.designs.length > 0 &&
+          <div>
+            <div className="design-grid">
+              {this.state.designs.map(design => 
+                <ProjectPreview 
+                  key={design._id}
+                  title={design.title}
+                  description={design.description}
+                  author={design.author}
+                  id={design._id}
+                  index={this.state.designs.indexOf(design)}
+                  designsArray={this.state.designs}
+                  {...design} />
+              )}
+            </div>
+            {this.state.designs.length >= 15 &&
+              <div className="load-more text-center">
+                <button className="btn btn-white">Load more projects...</button>
+              </div>
+            }
+          </div>
+        }
 
-        <div className="load-more text-center">
-          <button className="btn btn-white">Load more projects...</button>
-        </div>
+        { this.state.designs.length === 0 &&
+          <div className="load-more text-center">
+            <p>No projects found.</p>
+          </div>
+        }
 
       </Template>
     );

@@ -31,12 +31,13 @@ const userSchema = new Schema({
 	},
 	picture: {
 		type: String
+	},
+	points: {
+		type: Number,
+		default: 0
 	}
 })
 
-// userSchema.methods.sayHi = function() {
-//   console.log('HELLO SUPER METHODS')
-// }
 
 userSchema.methods.comparePassword = function(candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, (err, result) => {

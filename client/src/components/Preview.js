@@ -64,6 +64,8 @@ class Create extends Component {
     this.changeTextAlign = this.changeTextAlign.bind(this)
     this.changeFont = this.changeFont.bind(this)
     this.deleteLabel = this.deleteLabel.bind(this)
+    this.addDownload = this.addDownload.bind(this)
+    this.printDocument = this.printDocument.bind(this)
   }
 
 
@@ -265,6 +267,7 @@ class Create extends Component {
 // Print document
 
   printDocument() {
+    this.addDownload();
     window.print();
   }
 
@@ -366,6 +369,17 @@ class Create extends Component {
       design: design
     })
   }
+
+  addDownload() {
+    const design = {
+      id: this.props.params.designId
+    }
+    axios.post('/api/design/add-download', design)
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(console.error);
+  }
   
 
   render() {
@@ -386,7 +400,7 @@ class Create extends Component {
           <div className="pull-right">
             <button className="btn btn-primary" disabled><span className="lnr lnr-cloud-upload"></span> Save</button>
             <button className="btn btn-primary printButton" onClick={this.printDocument}><span className="lnr lnr-printer"></span>  Print</button>
-            <button className="btn btn-primary"><span className="lnr lnr-download"></span> Download</button>
+            <button className="btn btn-primary" onClick={this.addDownload}><span className="lnr lnr-download"></span> Download</button>
           </div>
         </div>
 
