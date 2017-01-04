@@ -210,7 +210,8 @@ nav ul {
 
 .tags {
 	padding-bottom: 20px;
-	width: 75%;
+	display: table;
+	margin: auto;
 
 	.tag {
 		float: left;
@@ -220,7 +221,7 @@ nav ul {
 	    text-transform: uppercase;
 	    letter-spacing: 0.5px;
 	    font-size: 11px;
-	    background-color: #fff;
+	    background-color: rgba(255,255,255,0.8);
 	    color: #919bad;
 	    cursor: pointer;
 	    border-radius: 3px;
@@ -232,7 +233,11 @@ nav ul {
 }
 
 .browse-search {
-	width: 25%;
+	width: 75%;
+	margin: auto;
+	border-radius: 100px;
+	margin-bottom: 30px;
+	padding: 20px;
 }
 
 .browse-filters {
@@ -289,6 +294,8 @@ nav ul {
 			float: left;
 			font-size: 14px;
 			padding-top: 1px;
+			width: 58%;
+			display: table;
 		}
 
 		.rating-position {

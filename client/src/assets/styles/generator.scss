@@ -479,6 +479,7 @@ label {
 
 #main-nav ul li {
 	padding: 0px;
+	display: block;
 }
 
 .profile-picture {
@@ -635,6 +636,21 @@ label {
 	}
 
 }
+
+
+.canvas-pdf {
+	// border: 1px solid red;
+	width: 210mm;
+	height: auto;
+	padding: 5mm;
+	transform: scale(0.748);
+	transform-origin: 0 0;
+
+	.designed-label {
+		padding: 5px;
+	}
+}
+
 
 /* CALENDAR */
 

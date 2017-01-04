@@ -1,0 +1,352 @@
+.website {
+	font-family: 'Proxima Nova';
+
+* {
+	box-sizing: border-box;
+}
+
+img {
+	max-width: 100%;
+}
+
+.wrapper {
+	width: 1140px;
+	margin: auto;
+}
+
+section {
+	padding: 70px 0px;
+	position: relative;
+}
+
+.grey-bg {
+	background-color: #f9f9f9;
+}
+
+/* HERO SECTION */
+
+.hero-section {
+	min-height: 95vh;
+	height: auto;
+	width: 100%;
+	background-image: url('/img/bg.jpg');
+	background-size: cover;
+	background-position: center center;
+	top: 0px;
+	position: relative;
+	padding: 0px;
+}
+
+.overlay {
+	position: absolute;
+	z-index: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-image: -webkit-linear-gradient(rgba(63,63,63,0.33) 0%, rgba(215,215,215,0.25) 47%);
+	background-image: -o-linear-gradient(rgba(63,63,63,0.33) 0%, rgba(215,215,215,0.25) 47%);
+	background-image: linear-gradient(rgba(63,63,63,0.33) 0%, rgba(215,215,215,0.25) 47%);
+}
+
+/* TOP NAVIGATION */
+
+nav {
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	z-index: 999;
+}
+
+nav ul {
+	list-style-type: none;
+	padding: 30px 0px;
+	margin: 0px;
+	float: right;
+}
+
+nav ul li {
+	display: inline-block;
+	padding: 0px 20px;
+	margin: 0px;
+	color: #fff;
+}
+
+nav ul li a {
+	color: #fff;
+}
+
+nav ul li a:hover {
+	color: inherit;
+}
+
+nav ul li.button a {
+	background: #FF7680;
+	border-radius: 100px;
+	padding: 15px 30px;
+	font-weight: 600;
+}
+
+nav .logo {
+	width: 200px;
+	float: left;
+}
+
+nav .logo img {
+	max-height: 50px;
+	display: none;
+}
+
+nav .logo h1 {
+	color: #fff;
+	font-size: 20px;
+	text-align: left;
+	margin-top: 25px;
+	font-weight: 600;
+}
+
+
+/* TYPOGRAPHY */
+
+h1 {
+
+}
+
+.main-heading {
+	font-size: 30px;
+	color: #FF7680;
+	font-weight: 400;
+	margin-bottom: 30px;
+}
+
+.main-heading + p {
+	font-size: 18px;
+	color: #4A6078;
+	line-height: 26px;
+	font-weight: 400;
+}
+
+.hero-block {
+	margin-top: 200px;
+	margin-bottom: 60px;
+	padding: 20px 40px;
+	padding-bottom: 30px;
+	background: rgba(253,253,253,0.97);
+	box-shadow: 0px 0px 88px 0px rgba(0,0,0,0.11);
+}
+
+/* HORIZONTAL FORM */
+
+.horizontal-form {
+	margin-top: 40px;
+}
+
+.horizontal-form::after {
+	clear: both;
+	content: '';
+}
+
+.form-input {
+	font-weight: 300;
+	font-size: 15px;
+	color: #697785;
+	letter-spacing: 0px;
+	background: #FFFFFF;
+	border-radius: 100px;
+	padding: 8px 14px;
+	border: 1px solid #E9E9E9;
+	outline: 0;
+}
+
+.form-input:focus {
+	box-shadow: 0px 0px 22px 0px #EBC4C7;
+}
+
+.horizontal-form .form-input:first-child {
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.horizontal-form .form-input:nth-child(2) {
+	border-radius: 0px;
+	border-left: 0px;
+	border-right: 0px;
+}
+
+.primary-submit {
+	font-weight: 600;
+	font-size: 18px;
+	color: #FFFFFF;
+	background: #FF7680;
+	border-radius: 100px;
+	padding: 7px 40px;
+	border: 0px;
+}
+
+.primary-submit.facebook {
+	background: #3b5998;
+}
+
+.horizontal-form .primary-submit {
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+
+/* STANDARD FORM */
+
+.standard-form {
+	width: 80%;
+	margin: auto;
+	text-align: left;
+}
+
+.standard-form .form-input {
+	display: block;
+	margin: 2px auto;
+	width: 100%;
+}
+
+.standard-form .input-group {
+	margin: 15px 0px;
+	width: 100%;
+}
+
+.standard-form .primary-submit {
+	width: 100%;
+	margin: 5px auto;
+}
+
+.more-link {
+	margin-top: 20px;
+}
+
+.shaped-block {
+	position: absolute;
+	z-index: 0;
+	width: 100%;
+	height: 27px;
+	background-image: url('/img/shape.svg');
+	background-size: 260px;
+}
+
+.shaped-block.primary-color {
+	background-image: url('/img/shape-primary.svg');
+}
+
+.shaped-block.light {
+	background-image: url('/img/shape-light.svg');
+}
+
+.shaped-block.bottom {
+	bottom: 0px;
+}
+
+.shaped-block.top {
+	top: -27px;
+}
+
+
+.page-title {
+	margin-top: 0px;
+	padding-top: 0px;
+}
+
+/* FEATURES */
+
+.features {
+	display: flex;
+	width: 100%;
+}
+
+.features .feature {
+	text-align: center;
+	width: 25%;
+	padding: 0px 20px;
+}
+
+.features .feature .icon {
+	font-size: 60px;
+	color: #FF7680;
+	margin-bottom: 20px;
+}
+
+.features .feature h4 {
+	margin-bottom: 30px;
+}
+
+.features .feature p {
+	color: #7d8ea0;
+}
+
+
+
+/* CALL TO ACTION */
+
+.call-to-action.reversed {
+	background-color: #FF7680;
+	color: #fff;
+}
+
+.call-to-action.reversed h1, .call-to-action.reversed p {
+	color: #fff;
+}
+
+.call-to-action.reversed .primary-submit {
+	background-color: #333;
+}
+
+.small-cta {
+	background-image: url('/img/cta2.jpeg');
+	background-size: cover;
+	background-position: center center;
+	padding-bottom: 110px;
+
+	h2 {
+		color: #fff;
+		margin-bottom: 30px;
+		    text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+	}
+}
+
+img.framed-image {
+	border: 1px solid #eee;
+    border-radius: 10px;
+    margin-bottom: -75px;
+}
+
+
+/* FOOTER */
+
+footer {
+	background-color: #333;
+	color: #fff;
+	padding: 50px 0px;
+}
+
+footer ul {
+	padding: 0px;
+	margin: 0px;
+}
+
+footer ul li {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+	line-height: 1.8;
+	color: #ddd;
+}
+
+footer h4 {
+	margin-bottom: 30px;
+}
+
+footer ul li a {
+	color: #ddd;
+}
+
+footer ul li a:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
+}

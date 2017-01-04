@@ -37,22 +37,6 @@ class Home extends Component {
 			return (
        <Template backgroundColor="#f9f9f9">
 
-        <h2 className="page-title">Most popular projects</h2> 
-
-        <div className="design-grid">
-          {this.state.topDesigns.map(design => 
-            <ProjectPreview 
-              key={design._id}
-              title={design.title}
-              description={design.description}
-              author={design.author}
-              id={design._id}
-              index={this.state.topDesigns.indexOf(design)}
-              designsArray={this.state.topDesigns}
-              {...design} />
-          )}
-        </div>
-
         <h2 className="page-title">Top users</h2> 
 
         <div className="top-users">
@@ -72,6 +56,22 @@ class Home extends Component {
                 <div className="rating"><i className="lnr lnr-diamond"></i> {user.points}</div>
               </div>
             </div>
+          )}
+        </div>
+
+        <h2 className="page-title">Most popular projects</h2> 
+
+        <div className="design-grid">
+          {this.state.topDesigns.map(design => 
+            <ProjectPreview 
+              key={design._id}
+              title={design.title}
+              description={design.description}
+              author={design.author}
+              id={design._id}
+              index={this.state.topDesigns.indexOf(design)}
+              designsArray={this.state.topDesigns}
+              {...design} />
           )}
         </div>
 

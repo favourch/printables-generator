@@ -34,14 +34,14 @@ class UserSettings extends Component {
 		// Get user data from the API
     axios.get('/api/user/currentUser')
       .then(response => {
-        console.log('GOT THE CURRENT USER')
-        console.log(response)
         this.setState({
             userId: response.data._id,
             username: response.data.username,
             email: response.data.email,
             firstName: response.data.firstName,
-            lastName: response.data.lastName
+            lastName: response.data.lastName,
+            profilePicture: response.data._id,
+            coverPhoto: response.data._id
         })
       })
       .catch(console.error);
@@ -74,8 +74,12 @@ class UserSettings extends Component {
                            .field('file', file)
 
     upload.end((err, response) => {
+      console.log('finished upload')
+      console.log(response)
       if (err) {
         console.error(err);
+      } else {
+        showMessage('success', 'Profile picture has been updated.')
       }
     })
   }
@@ -87,6 +91,8 @@ class UserSettings extends Component {
     upload.end((err, response) => {
       if (err) {
         console.error(err);
+      } else {
+        showMessage('success', 'Cover photo has been updated.')
       }
     })
   }

@@ -1,0 +1,10 @@
+<svg width="407px" height="43px" viewBox="0 1015 407 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Group" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(0.000000, 1015.000000)">
+        <polygon id="Triangle" fill="#F9F9F9" points="50.875 0 101.75 43 0 43"></polygon>
+        <polygon id="Triangle" fill="#F9F9F9" points="152.625 0 203.5 43 101.75 43"></polygon>
+        <polygon id="Triangle" fill="#F9F9F9" points="254.375 0 305.25 43 203.5 43"></polygon>
+        <polygon id="Triangle" fill="#F9F9F9" points="356.125 0 407 43 305.25 43"></polygon>
+    </g>
+</svg>

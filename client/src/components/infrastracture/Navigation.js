@@ -27,8 +27,6 @@ class Navigation extends Component {
 		// Get user data from the API
 		axios.get('/api/user/currentUser')
 		  .then(response => {
-		    console.log('GOT THE CURRENT USER')
-		    console.log(response)
 		    this.setState({
 		    	loggedIn: true,
 		        userId: response.data._id,
@@ -38,7 +36,7 @@ class Navigation extends Component {
 		        lastName: response.data.lastName
 		    })
 		  })
-		  .catch(console.error);
+		  .catch();
 	}
 
 	render() {
@@ -75,10 +73,10 @@ class Navigation extends Component {
 	        	}
 	            { this.state.loggedIn &&
 		            <Nav pullRight>
-		              <div className="profile-picture" style={{backgroundImage: 'url('+cloudinary.url('users/'+this.state.userId+'.jpg', {width: 100, height: 100, crop: "fill", version: '999'})+')'}}></div>
+		              <div className="profile-picture" style={{backgroundImage: 'url('+cloudinary.url('users/'+this.state.userId+'.jpg', {width: 100, height: 100, crop: "fill"})+')'}}></div>
 		              <NavDropdown title={name} id="basic-nav-dropdown">
-		                <MenuItem><Link to={`/users/${this.state.username}`}>My profile</Link></MenuItem>
-		                <MenuItem><Link to="/settings">Settings</Link></MenuItem>
+		                <li><Link to={`/users/${this.state.username}`}>My profile</Link></li>
+		                <li><Link to="/settings">Settings</Link></li>
 		                <MenuItem divider />
 		                <MenuItem onClick={ () => logoutUser() }>Logout</MenuItem>
 		              </NavDropdown>

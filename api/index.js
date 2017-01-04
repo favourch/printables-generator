@@ -84,7 +84,8 @@ router.post('/user/upload-image', upload.single('file'), function (req, res, nex
 	cloudinary.uploader.upload(
 		req.file.path, 
 		function(result) { 
-			console.log(result) }, 
+			console.log(result)
+			res.sendStatus(200) }, 
 	    { public_id: 'users/'+req.user._id })
 })
 
@@ -95,7 +96,8 @@ router.post('/user/upload-cover', upload.single('file'), function (req, res, nex
 	cloudinary.uploader.upload(
 		req.file.path, 
 		function(result) { 
-			console.log(result) }, 
+			console.log(result)
+			res.sendStatus(200) }, 
 	    { public_id: 'users/cover-'+req.user._id })
 })
 
@@ -148,8 +150,6 @@ router.get('/authenticate', function(req, res) {
 router.post('/login',
   passport.authenticate('local'),
   function(req, res) {
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
     res.send(req.user)
 })
 
@@ -196,7 +196,28 @@ router.get('/designs', (req, res) => {
 		})
 	}).sort({'created': -1})
 	// .limit(15)
+})
 
+
+router.get('/top-designs', (req, res) => {
+	Design.find({}, 
+		'id title description authorId created likes downloads', 
+		function(err, designs) {
+		var newDesigns = []
+
+		designs.forEach(function(design) {
+			var authorId = design.authorId
+			User.findOne({ '_id': authorId }, '_id username firstName lastName points', function(err, author) {
+				design.author = author
+				newDesigns.push(design)
+
+				if (newDesigns.length === designs.length) {
+					newDesigns.sort(dynamicSort('-downloads'))
+					res.send(newDesigns)
+				}
+			})
+		})
+	}).sort({'downloads': -1}).limit(6)
 })
 
 // Get designs by user
@@ -219,60 +240,20 @@ router.get('/design/:designId', (req, res) => {
 	})
 })
 
-
-// Upload image to cloudinary
-router.post('/upload-image', (req, res) => {
-	console.log('USER', req.user.username, 'is trying to upload image')
-	cloudinary.uploader.upload(
-		'https://cloudinary.com/images/logo-white.png', 
-		function(result) { 
-			console.log(result) }, 
-        { public_id: "john_doe_1001" });
+// Get design preview by id
+router.get('/preview-design/:designId', (req, res) => {
+	const designId = req.params.designId
+	console.log('get design preview by id', designId)
+	Design.findOne({ _id: designId }, function (err, response) {
+	  if (err) {
+	  	console.log('problem');
+	  	return res.sendStatus(404);
+	  }
+	  console.log('ok')
+	  res.send(response)
+	})
 })
 
-
-router.post('/user/change-profile-picture', function(req, res) {
-	console.log('USER', req.user.username, 'is trying to change profile picture')
-	var userId = req.user.id
- 
-    // if (!req.files) {
-    //     res.send('No files were uploaded.');
-    //     return;
-    // }
-
-    console.log('request body')
-    console.log(req.body)
-
-    console.log('request files')
-    console.log(req.files)
-
-	cloudinary.uploader.upload(
-		'https://cloudinary.com/images/logo-white.png', 
-		function(result) { 
-			console.log(result) }, 
-        { public_id: "john_doe_1001" });
-
-    // var uploadedFile = req.files.image
-    // console.log('File path' + uploadedFile.path)
-    // console.log('FILES')
-    // console.log(uploadedFile)
-
-	// cloudinary.uploader.upload(
-	// 	uploadedFile, 
-	// 	function(result) { console.log('Result of uploading: ' + result) }, 
- //        { public_id: 'users/p-'+userId })
-
- 
-    // sampleFile = req.files.sampleFile;
-    // sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
-    //     if (err) {
-    //         res.status(500).send(err);
-    //     }
-    //     else {
-    //         res.send('File uploaded!');
-    //     }
-    // });
-});
 
 
 export default router;

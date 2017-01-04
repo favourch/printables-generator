@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Template from './infrastracture/Template'
+import Navigation from './infrastracture/Navigation'
 import { loginUser } from './infrastracture/utils'
 
 class Login extends Component {
@@ -44,29 +44,46 @@ class Login extends Component {
     }
 
     return (
-      <Template backgroundColor="#f9f9f9">
-        <div className="white-box">
-          <div className="login">
-            <h1>Login</h1>
 
-            { newUser &&
-              <div className="alert alert-success" role="alert">You have been registered. Please log in.</div>
-            }
+      <div>
+        <Navigation />
 
-            <form onKeyPress={ this.checkSubmit } className="login-form">
-              <div className="input-group">
-                <label>Username</label>
-                <input type="text" name="username" className="form-control" placeholder="Username" value={this.state.username} onChange={this.changeValue} />
+        <div className="website">
+          <section className="hero-section">
+            <div className="overlay"></div>
+            <div className="wrapper">
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="row">
+                    <div className="col-md-6 col-md-offset-3 text-center hero-block">
+                      <h1 className="main-heading">Login</h1>
+                      <p>Sign in to use label generator. </p>
+                      { newUser &&
+                        <div className="alert alert-success" role="alert">You have been registered. Please log in.</div>
+                      }
+                      <form className="standard-form" onKeyPress={ this.checkSubmit }>
+                        <div className="input-group">
+                          <label>Username</label>
+                          <input type="text" className="form-input" name="username" placeholder="Username" value={this.state.username} onChange={this.changeValue} />
+                        </div>
+                        <div className="input-group">
+                          <label>Password</label>
+                          <input type="password" name="password" className="form-input" placeholder="Password" value={this.state.password} onChange={this.changeValue} />
+                        </div>
+                        <button type="button" onClick={ this.login } className="primary-submit">Login</button>
+                        <button type="button" className="primary-submit facebook">Login with Facebook</button>
+                      </form>
+                    </div>
+                  </div>  
+                </div>
               </div>
-              <div className="input-group">
-                <label>Password</label>
-                <input type="password" name="password" className="form-control" placeholder="Password" value={this.state.password} onChange={this.changeValue} />
-              </div>
-              <button type="button" onClick={ this.login } className="form-control btn btn-primary">Login</button>
-            </form>
-          </div>
+            </div>
+
+            <div className="shaped-block bottom"></div>
+          </section>
         </div>
-      </Template>
+
+      </div>
     );
   }
 }

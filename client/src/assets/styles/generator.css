@@ -392,7 +392,8 @@ label {
   margin-bottom: 0px; }
 
 #main-nav ul li {
-  padding: 0px; }
+  padding: 0px;
+  display: block; }
 
 .profile-picture {
   display: inline-block;
@@ -506,6 +507,15 @@ label {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     /* Non-Webkit Browsers */ } }
+
+.canvas-pdf {
+  width: 210mm;
+  height: auto;
+  padding: 5mm;
+  transform: scale(0.748);
+  transform-origin: 0 0; }
+  .canvas-pdf .designed-label {
+    padding: 5px; }
 
 /* CALENDAR */
 .calendar {

@@ -80,7 +80,7 @@ export default class ProjectPreview extends React.Component {
   render() {
     const design = this.state.design
     const dateCreated = design.created.slice(0,16).replace('T', ' ')
-    const authorPicture = cloudinary.url('users/'+this.state.design.author._id, {width: 100, height: 100, crop: "fill", version: '999'})
+    const authorPicture = cloudinary.url('users/'+this.state.design.author._id, {width: 100, height: 100, crop: "fill"})
     const likesNumber = this.state.design.likes.length
     const downloadsNumber = this.state.design.downloads
 
@@ -114,7 +114,7 @@ export default class ProjectPreview extends React.Component {
             <div className="design-description">{this.props.description}</div>
             <div className="design-author">
               <Link to={`/users/${this.props.author.username}`}>
-                <div className="profile-picture" style={{backgroundImage: 'url('+cloudinary.url('users/'+this.props.author._id, {width: 100, height: 100, crop: "fill", version: '999'})+'.jpg)'}}></div>
+                <div className="profile-picture" style={{backgroundImage: 'url('+cloudinary.url('users/'+this.props.author._id, {width: 100, height: 100, crop: "fill"})+'.jpg)'}}></div>
               </Link>
               <div className="author">
                 <Link to={`/users/${this.props.author.username}`}>

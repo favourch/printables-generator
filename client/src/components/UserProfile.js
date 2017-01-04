@@ -52,10 +52,10 @@ class UserProfile extends Component {
     return (
       <Template backgroundColor="#f9f9f9">
 
-        <div className="profile-header" style={{backgroundImage: 'url('+cloudinary.url('users/cover-'+this.state.user._id+'.jpg', {width: 960, height: 300, crop: "fill", version: '999'})+')'}}>
+        <div className="profile-header" style={{backgroundImage: 'url('+cloudinary.url('users/cover-'+this.state.user._id+'.jpg', {width: 960, height: 300, crop: "fill"})+')'}}>
           <div className="profile-header-overlay"></div>
           <div className="profile-header-content">
-            <div className="profile-picture" style={{backgroundImage: 'url('+cloudinary.url('users/'+this.state.user._id+'.jpg', {width: 300, height: 300, crop: "fill", version: '999'})+')'}}></div>
+            <div className="profile-picture" style={{backgroundImage: 'url('+cloudinary.url('users/'+this.state.user._id+'.jpg', {width: 300, height: 300, crop: "fill"})+')'}}></div>
             <div className="profile-title">
               <h2>@{this.state.user.username}</h2>
             	<h1>{this.state.user.firstName} {this.state.user.lastName}</h1>

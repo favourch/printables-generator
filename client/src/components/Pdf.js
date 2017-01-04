@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-import Template from './infrastracture/Template'
 import Label from './Create/Label'
 import axios from 'axios'
 import WebFont from 'webfontloader'
-import { browserHistory } from 'react-router'
 
-class Preview extends Component {
+class Pdf extends Component {
 
   constructor(props) {
     super(props)
@@ -191,28 +189,9 @@ class Preview extends Component {
 
     return (
 
-    <Template width="full" loaderText="Label generator is loading...">
-
-      <link rel="stylesheet" type="text/css" href={'https://fonts.googleapis.com/css?family='+fontName} />
-
-      <div className="workcontent no-sidebar">
-
-        <div className="action-buttons">
-          <button className="btn btn-primary"><span className="lnr lnr-undo"></span></button>
-          <button className="btn btn-primary"><span className="lnr lnr-redo"></span></button>
-          <button className="btn btn-primary" onClick={() => this.zoomIn()}><span className="lnr lnr-plus-circle"></span></button>
-          <a className="btn btn-primary"><span>{this.state.zoom*100}%</span></a>
-          <button className="btn btn-primary" onClick={() => this.zoomOut()}><span className="lnr lnr-circle-minus"></span></button>
-
-          <div className="pull-right">
-            <button className="btn btn-primary" disabled><span className="lnr lnr-cloud-upload"></span> Save</button>
-            <button className="btn btn-primary printButton" onClick={this.printDocument}><span className="lnr lnr-printer"></span>  Print</button>
-            <button className="btn btn-primary"><span className="lnr lnr-download"></span> Download</button>
-          </div>
-        </div>
-
-        <div id="canvas" className="canvas" style={{ transform: 'scale('+this.state.zoom+','+this.state.zoom+')' }}>
-          <div className="canvas-printable">
+        <div>
+          <link rel="stylesheet" type="text/css" href={'https://fonts.googleapis.com/css?family='+fontName} />
+          <div className="canvas-pdf">
             <div className="canvas-grid">
 
               {
@@ -227,29 +206,21 @@ class Preview extends Component {
                             openTextPanel={() => this.changeOpenPanel('4')}
                             changeText={this.changeLabelName}
                             deleteLabel={this.deleteLabel}
+                            editable={false}
                             >
                          </Label>
                 })
               }
 
-              <div className="canvas-grid-item end-item" onClick={() => this.addLabel()}>
-                <div id="add-label"><span className="lnr lnr-plus-circle"></span><br/><p>Add label</p></div>
-              </div>
-
             </div>
-
-            <div className="canvas-footer">Created using MissBerry Label Generator (www.missberry.pl)</div>
           </div>
         </div>
-
-      </div>
-    </Template>
 
     );
   }
 }
 
-export default Preview;
+export default Pdf;
 
 
 

@@ -26,19 +26,33 @@ class Browse extends Component {
   render() {
 
     return (
-      <Template backgroundColor="#f9f9f9">
 
-        <h2 className="page-title">Browse projects</h2> 
+      <div>
+      <div className="website">
+        <section className="small-cta browse-header">
+          <div className="overlay"></div>
+          <div className="wrapper">
+            <div className="row">
+              <div className="col-md-6 col-md-offset-3 text-center">
+                <h2>Browse projects</h2>
+                <input type="text" className="form-control browse-search" placeholder="Search for something..." />
 
-        <div className="browse-filters">
-          <div className="tags">
-            <div className="tag">Spice labels</div>
-            <div className="tag">Gift labels</div>
-            <div className="tag">Name labels</div>
-            <div className="tag">Badges</div>
+                <div className="browse-filters">
+                  <div className="tags">
+                    <div className="tag">Spice labels</div>
+                    <div className="tag">Gift labels</div>
+                    <div className="tag">Name labels</div>
+                    <div className="tag">Badges</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <input type="text" className="form-control browse-search" placeholder="Search for something..." />
-        </div>
+          <div className="shaped-block light bottom"></div>
+        </section>
+      </div>
+
+      <Template backgroundColor="#f9f9f9">
 
         { this.state.designs.length > 0 &&
           <div>
@@ -70,6 +84,7 @@ class Browse extends Component {
         }
 
       </Template>
+      </div>
     );
   }
 }

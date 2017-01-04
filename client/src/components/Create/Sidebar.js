@@ -3,7 +3,6 @@ import cloudinary from 'cloudinary'
 import { PanelGroup, Panel } from 'react-bootstrap'
 import PopupColorPicker from './PopupColorPicker'
 import { SquareShape, CircleShape, BadgeShape, LabelShape, Shape3, Shape4 } from './Shapes'
-import FontSelector from './FontSelector'
 
 class Sidebar extends React.Component {
 

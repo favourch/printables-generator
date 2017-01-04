@@ -32,11 +32,11 @@ class Create extends Component {
         textTransform: 'none',
         borders: [
           {id: 1,
-          borderWidth: 2,
+          borderWidth: 0,
           borderStyle: 'solid',
-          borderColor: '#ddd'},
+          borderColor: '#333'},
           {id: 2,
-          borderWidth: 6,
+          borderWidth: 0,
           borderStyle: 'solid',
           borderColor: '#333'}
         ],
@@ -421,7 +421,7 @@ class Create extends Component {
     axios.post('/api/design/delete', design)
     .then(response => {
       showMessage('success', 'The project has been deleted.')
-      browserHistory.push('/')
+      browserHistory.push('/browse')
     })
     .catch(error => {
       showMessage('error', 'Something went wrong.')
@@ -430,9 +430,13 @@ class Create extends Component {
 
   render() {
 
+    const fontName = this.state.design.fontFamily.replace(' ', '+')
+
     return (
 
     <Template width="full" loaderText="Label generator is loading...">
+
+      <link rel="stylesheet" type="text/css" href={'https://fonts.googleapis.com/css?family='+fontName} />
 
       <ConfirmModal 
         show={this.state.confirmModalVisible} 

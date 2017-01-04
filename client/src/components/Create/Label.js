@@ -54,6 +54,7 @@ export default class Label extends React.Component {
                   textStyles={textStyles}
                   changeText={this.props.changeText}
                   openTextPanel={this.props.openTextPanel}
+                  editable={this.props.editable}
                 /> 
 
               <div className="delete-label" onClick={() => this.props.deleteLabel(id)}>
@@ -90,6 +91,7 @@ export class Shape extends React.Component {
     if (this.props.type === 2) {
       return (
         <circle 
+          width="50"
           cx="50" 
           cy="50"
           r="50"
@@ -190,8 +192,12 @@ export class CustomSVG extends React.Component {
     this.addCSSImportant()  
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    this.addCSSImportant()  
+  }
+
   addCSSImportant() {
-    var styles = $('.inner-label-text').attr('style');
+    var styles = $('#label'+this.props.id+' .inner-label-text').attr('style');
     if (!styles.includes("!important")) {
       var newStyles = styles.slice(0, styles.indexOf('color'))
       newStyles += 'color: '+this.props.textColor+' !important'
@@ -203,13 +209,25 @@ export class CustomSVG extends React.Component {
 
   render() {
 
+    var width = this.props.width
+    console.log('borderWidth', this.props.borderWidth)
+    // var vX = 0;
+    // var vY = 0;
+    // var vWidth = 100;
+    // var vHeight = 100;
+    console.log('width', width)
+    var vX = 0 - (this.props.borderWidth/2);
+    var vY = 0 - (this.props.borderWidth/2);
+    var vWidth = 100 + (this.props.borderWidth);
+    var vHeight = 100 + (this.props.borderWidth);
+
     return (
 
       <svg 
         id={`label${this.props.id}`} 
-        width={`${this.props.width}mm`} 
-        height={`${this.props.width}mm`} 
-        viewBox="0 0 100 100" >
+        width={`${width}mm`} 
+        height={`${width}mm`} 
+        viewBox={`${vX} ${vY} ${vWidth} ${vHeight}`} >
 
         <defs>
           <pattern id="img1" patternUnits="userSpaceOnUse" width="100" height="100">
@@ -226,38 +244,58 @@ export class CustomSVG extends React.Component {
           type={this.props.shape} 
           background={this.props.backgroundColor}
           borderColor={this.props.borderColor2}
-          borderWidth={this.props.borderWidth2} />
+          borderWidth={this.props.borderWidth+this.props.borderWidth2}
+          borderType="0" />
 
         <Shape
           type={this.props.shape} 
           background={this.props.backgroundImage === "" ? this.props.backgroundColor : "url(#img1)"}
           borderColor={this.props.borderColor}
-          borderWidth={this.props.borderWidth} />
+          borderWidth={this.props.borderWidth}
+          borderType="0" />
 
-        <foreignObject 
-          x="0" 
-          y="42"
-          width="100"
-          height="100"
-          alignmentBaseline="central">
-            <div 
-              style={{textAlign: "center"}}
-              spellCheck={false}>
-                <text 
-                  textAnchor="middle" 
-                  alignmentBaseline="central"
-                  dominantBaseline="middle" 
-                  fill={this.props.textColor}
-                  style={this.props.textStyles}
-                  contentEditable="true"
-                  suppressContentEditableWarning
-                  onBlur={this.props.changeText.bind(this, this.props.id)}
-                  className="inner-label-text"
-                  onClick={this.props.openTextPanel} >
-                    {this.props.name}
-                </text>
-            </div>
-        </foreignObject>
+        { this.props.editable === false &&
+          <text 
+            textAnchor="middle" 
+            alignmentBaseline="central"
+            dominantBaseline="middle" 
+            width="100"
+            height="100"
+            x="50"
+            y="50"
+            fill={this.props.textColor}
+            style={this.props.textStyles}
+            className="inner-label-text" >
+              {this.props.name}
+          </text>
+        }
+
+        { this.props.editable !== false &&
+          <foreignObject 
+            x="0" 
+            y="42"
+            width="100"
+            height="100"
+            alignmentBaseline="central">
+              <div 
+                style={{textAlign: "center"}}
+                spellCheck={false}>
+                  <text 
+                    textAnchor="middle" 
+                    alignmentBaseline="central"
+                    dominantBaseline="middle" 
+                    fill={this.props.textColor}
+                    style={this.props.textStyles}
+                    contentEditable="true"
+                    suppressContentEditableWarning
+                    onBlur={this.props.changeText.bind(this, this.props.id)}
+                    className="inner-label-text"
+                    onClick={this.props.openTextPanel} >
+                      {this.props.name}
+                  </text>
+              </div>
+          </foreignObject>
+        }
       
       </svg>
 

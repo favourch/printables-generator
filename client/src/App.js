@@ -3,10 +3,11 @@ import { Router, Route, browserHistory } from 'react-router'
 import { cloudinaryConfig } from 'react-cloudinary'
 import cloudinary from 'cloudinary'
 import axios from 'axios'
-import Home from './components/Home'
+import Landing from './components/Landing'
 import Browse from './components/Browse'
 import Create from './components/Create'
 import Preview from './components/Preview'
+import Pdf from './components/Pdf'
 import PageNotFound from './components/PageNotFound'
 import Register from './components/Register'
 import Login from './components/Login'
@@ -35,9 +36,10 @@ class App extends Component {
   render() {
     return (
       <Router history={browserHistory} onUpdate={() => window.scrollTo(0, 0)}>
-        <Route path='/' component={ Home } />
+        <Route path='/' component={ Landing } />
         <Route path='/browse' component={ Browse } />
         <Route path='/preview/:designId' component={ Preview } />
+        <Route path='/pdf/:designId' component={ Pdf } />
         <Route path='/create' component={ Create } onEnter={ requireAuth }>
           <Route path="/create/:designId" component={ Create } />
         </Route>
