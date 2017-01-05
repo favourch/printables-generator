@@ -105,15 +105,15 @@ class Create extends Component {
       })
     }
 
-    // GET LIST OF GOOGLE FONTS
-    axios.get('https://www.googleapis.com/webfonts/v1/webfonts?sort=popularity&key=AIzaSyBCnpPf46kxGMsFE9pQG4Pu2YseRvnjPVE')
-      .then(response => {
-        var fonts = response.data.items.slice(0,45)
-        this.setState({
-          availableFonts: fonts
-        })
-      })
-      .catch(console.error);
+    // // GET LIST OF GOOGLE FONTS
+    // axios.get('https://www.googleapis.com/webfonts/v1/webfonts?sort=popularity&key=AIzaSyBCnpPf46kxGMsFE9pQG4Pu2YseRvnjPVE')
+    //   .then(response => {
+    //     var fonts = response.data.items.slice(0,45)
+    //     this.setState({
+    //       availableFonts: fonts
+    //     })
+    //   })
+    //   .catch(console.error);
 
   }
 
@@ -169,11 +169,12 @@ class Create extends Component {
 
   // Change font and import web font from google
 
-  changeFont(event) {
-    const font = event.target.value
+  changeFont(font) {
+    console.log('change the font')
+    console.log(font)
+
     const design = this.state.design
     design.fontFamily = font
-    console.log(design)
     this.setState({
       design: design
     })
@@ -182,8 +183,7 @@ class Create extends Component {
       google: {
         families: [font]
       }
-    });
-
+    })
   }
 
   // Change project properties 
@@ -430,7 +430,7 @@ class Create extends Component {
 
   render() {
 
-    const fontName = this.state.design.fontFamily.replace(' ', '+')
+    const fontName = this.state.design.fontFamily.split(' ').join('+');
 
     return (
 

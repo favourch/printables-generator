@@ -3,6 +3,7 @@ import cloudinary from 'cloudinary'
 import { PanelGroup, Panel } from 'react-bootstrap'
 import PopupColorPicker from './PopupColorPicker'
 import { SquareShape, CircleShape, BadgeShape, LabelShape, Shape3, Shape4 } from './Shapes'
+import FontSelector from './FontSelector'
 
 class Sidebar extends React.Component {
 
@@ -176,13 +177,7 @@ class Sidebar extends React.Component {
               <div className="col-md-8">
                 <div className="form-group">
                   <label>Font family</label>
-                  <select className="form-control" name="fontFamily" value={this.props.design.fontFamily} onChange={this.props.changeFont}>
-                    {
-                      this.props.availableFonts.map((font) => {
-                        return <option key={font.family} value={font.family} style={{fontFamily: 'Comic Sans'}}>{font.family}</option>
-                      })
-                    }
-                  </select>
+                  <FontSelector onFontChange={this.props.changeFont} />
                 </div>
               </div>
               <div className="col-md-4">

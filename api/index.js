@@ -50,7 +50,7 @@ router.get('/users', (req, res) => {
 router.get('/top-users', (req, res) => {
 	User.find(function(err, users) {
 		res.send(users)
-	}).sort({'points': -1})
+	}).sort({'points': -1}).limit(6)
 })
 
 

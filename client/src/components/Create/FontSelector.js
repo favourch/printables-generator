@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 export default class FontSelector extends React.Component {
 
@@ -6,11 +7,28 @@ export default class FontSelector extends React.Component {
     super(props)
 
     this.state = {
-      selected: false,
-      dropdownOpen: false
+      selectedFont: 'Roboto',
+      dropdownOpen: false,
+      availableFonts: []
     }
 
     this.openDropdown = this.openDropdown.bind(this)
+    this.closeDropdown = this.closeDropdown.bind(this)
+    this.toggleDropdown = this.toggleDropdown.bind(this)
+    this.selectFont = this.selectFont.bind(this)
+  }
+
+  componentDidMount() {
+
+    // GET LIST OF GOOGLE FONTS
+    axios.get('https://www.googleapis.com/webfonts/v1/webfonts?sort=popularity&key=AIzaSyBCnpPf46kxGMsFE9pQG4Pu2YseRvnjPVE')
+      .then(response => {
+        var fonts = response.data.items.slice(0,100)
+        this.setState({
+          availableFonts: fonts
+        })
+      })
+      .catch(console.error);
   }
 
   openDropdown() {
@@ -19,21 +37,70 @@ export default class FontSelector extends React.Component {
   	})
   }
 
+  closeDropdown() {
+    this.setState({
+      dropdownOpen: false
+    })
+  }
+
+  toggleDropdown() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    })
+  }
+
+  selectFont(font) {
+    console.log('Select font')
+    console.log(font)
+    this.setState({
+      selectedFont: font,
+      dropdownOpen: false
+    })
+
+    this.props.onFontChange(font)
+  }
+
   render() {
 
     return (
 
-			<ul className="font-selector">
-				<li onClick={this.openDropdown} style={{fontFamily: 'Roboto'}}>Roboto</li>
-				{this.state.dropdownOpen &&
-					<div>
-				  <li style={{fontFamily: 'Roboto'}}>Roboto</li>
-				  <li style={{fontFamily: 'Oswald'}}>Oswald</li>
-				  <li style={{fontFamily: 'Playfair Display'}}>Playfair Display</li>
-				  <li style={{fontFamily: 'Open Sans'}}>Open Sans</li>
-				  </div>
-				}
-			</ul>
+    <div className="font-selector">
+
+      {
+        this.state.availableFonts.map((font) => {
+          const fontName = font.family.split(' ').join('+')
+          const url = "https://fonts.googleapis.com/css?family="+fontName+"&text="+fontName
+          return <link rel="stylesheet" type="text/css" href={url} />
+        })
+      }
+
+      {this.state.dropdownOpen &&
+        <div className="click-outside" onClick={this.closeDropdown}></div>
+      }
+
+      <div className="font-input">
+        <div className="selected-font" 
+             style={{fontFamily: this.state.selectedFont}}
+             onClick={this.toggleDropdown} >
+             {this.state.selectedFont}
+        </div>
+
+        {this.state.dropdownOpen &&
+    			<ul>
+              {
+                this.state.availableFonts.map((font) => {
+                  return <li key={font.family}
+                             style={{fontFamily: font.family}} 
+                             onClick={() => this.selectFont(font.family)} >
+                             {font.family}
+                         </li>
+                })
+              }
+    			</ul>
+        }
+      </div>
+
+    </div>
 
     )
   }

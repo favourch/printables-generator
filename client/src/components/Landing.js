@@ -1,16 +1,25 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import ProjectPreview from './infrastracture/ProjectPreview'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 import cloudinary from 'cloudinary'
 import Navigation from './infrastracture/Navigation'
 
 class Landing extends Component {
 
-		state = {
-			users: [],
-      topDesigns: []
-		}
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      users: [],
+      topDesigns: [],
+      firstName: '',
+      email: ''
+    }
+
+    this.changeValue = this.changeValue.bind(this)
+    this.redirectToLogin = this.redirectToLogin.bind(this)
+  }    
 
 		componentDidMount() {
 
@@ -33,6 +42,22 @@ class Landing extends Component {
         .catch(console.error);
 		}
 
+    changeValue(event) {
+      this.setState({
+        [event.target.name]: event.target.value
+      })
+    }
+
+    redirectToLogin() {
+      browserHistory.push({
+        pathname: '/register',
+        state: { 
+          firstName: this.state.firstName, 
+          email: this.state.email
+        }
+      })
+    }
+
 		render() {
 			return (
         <div>
@@ -49,9 +74,9 @@ class Landing extends Component {
                       <h1 className="main-heading">Design custom printable labels</h1>
                       <p>Create your own printables. Choose from multiple projects created by other users. Share your own designs and gain points and build your reputation in the community.</p>
                       <div className="horizontal-form">
-                        <input type="text" className="form-input" placeholder="Your name" />
-                        <input type="email" className="form-input" placeholder="Your email" />
-                        <input type="submit" className="primary-submit" value="Sign up" />
+                        <input type="text" className="form-input" name="firstName" placeholder="Your name" value={this.state.firstName} onChange={this.changeValue}/>
+                        <input type="email" className="form-input" name="email" value={this.state.email} onChange={this.changeValue} placeholder="Your email" />
+                        <button type="button" className="primary-submit" onClick={this.redirectToLogin}>Sign up</button>
                       </div>
                       <div className="more-link">or <a href="#"><strong>find out more</strong></a></div>
                     </div>
@@ -163,7 +188,7 @@ class Landing extends Component {
               <div className="row">
                 <div className="col-md-6 col-md-offset-3 text-center">
                   <h2>Create your own printable labels</h2>
-                  <button className="primary-submit">Start designing now</button>
+                  <button className="primary-submit" onClick={this.redirectToLogin}>Start designing now</button>
                 </div>
               </div>
             </div>
@@ -210,9 +235,9 @@ class Landing extends Component {
                   <h1 className="main-heading">Zaprojektuj własne etykiety na przyprawy</h1>
                   <p>Twórz własne projekty do druku. Wybieraj spośród gotowych zestawów etykiety na przyprawy, planów zajęć, kalendarzy i wielu innych zaprojektowanych przez użytkowników. Udostępniaj i dziel się swoimi projektami zdobywając reputację.</p>
                   <div className="horizontal-form">
-                    <input type="text" className="form-input" placeholder="Twoje imię" />
-                    <input type="email" className="form-input" placeholder="Twój email" />
-                    <input type="submit" className="primary-submit" value="Utwórz konto" />
+                    <input type="text" className="form-input" name="firstName" placeholder="Your name" value={this.state.firstName} onChange={this.changeValue}/>
+                    <input type="email" className="form-input" name="email" value={this.state.email} onChange={this.changeValue} placeholder="Your email" />
+                    <button type="button" className="primary-submit" onClick={this.redirectToLogin}>Sign up</button>
                   </div>
                 </div>
               </div>

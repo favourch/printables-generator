@@ -69,7 +69,7 @@ class Browse extends Component {
                   {...design} />
               )}
             </div>
-            {this.state.designs.length >= 15 &&
+            {this.state.designs.length >= 150 &&
               <div className="load-more text-center">
                 <button className="btn btn-white">Load more projects...</button>
               </div>

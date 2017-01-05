@@ -57,7 +57,20 @@ class Register extends Component {
     })
   }
 
+  componentDidMount() {
+    if (this.props.location.state) {
+      var firstName = this.props.location.state.firstName
+      var email = this.props.location.state.email
+
+      this.setState({
+        firstName: firstName,
+        email: email
+      })
+    }
+  }
+
   render() {
+
     return (
       <div>
         <Navigation />

@@ -210,12 +210,12 @@ export class CustomSVG extends React.Component {
   render() {
 
     var width = this.props.width
-    console.log('borderWidth', this.props.borderWidth)
-    // var vX = 0;
-    // var vY = 0;
-    // var vWidth = 100;
-    // var vHeight = 100;
-    console.log('width', width)
+    // console.log('borderWidth', this.props.borderWidth)
+    // // var vX = 0;
+    // // var vY = 0;
+    // // var vWidth = 100;
+    // // var vHeight = 100;
+    // console.log('width', width)
     var vX = 0 - (this.props.borderWidth/2);
     var vY = 0 - (this.props.borderWidth/2);
     var vWidth = 100 + (this.props.borderWidth);
