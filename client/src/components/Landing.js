@@ -232,8 +232,8 @@ class Landing extends Component {
             <div className="wrapper">
               <div className="row">
                 <div className="col-md-8 col-md-offset-2 text-center">
-                  <h1 className="main-heading">Zaprojektuj własne etykiety na przyprawy</h1>
-                  <p>Twórz własne projekty do druku. Wybieraj spośród gotowych zestawów etykiety na przyprawy, planów zajęć, kalendarzy i wielu innych zaprojektowanych przez użytkowników. Udostępniaj i dziel się swoimi projektami zdobywając reputację.</p>
+                  <h1 className="main-heading">Start designing your own printable labels</h1>
+                  <p>Design your own projects and print them. Choose from hunderds projects created by the users. Share your own designs gaining points and improving your reputation. </p>
                   <div className="horizontal-form">
                     <input type="text" className="form-input" name="firstName" placeholder="Your name" value={this.state.firstName} onChange={this.changeValue}/>
                     <input type="email" className="form-input" name="email" value={this.state.email} onChange={this.changeValue} placeholder="Your email" />
@@ -249,27 +249,26 @@ class Landing extends Component {
             <div className="wrapper">
               <div className="row">
                 <div className="col-md-3">
-                  <h4>Aplikacja</h4>
+                  <h4>Design me</h4>
                   <ul>
-                    <li><a href="#">O co chodzi?</a></li>
-                    <li><a href="#">Regulamin</a></li>
-                    <li><a href="#">Polityka prywatności</a></li>
-                    <li><a href="#">Kontakt</a></li>
+                    <li><a href="#">What is it about?</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Contact</a></li>
                   </ul>
                 </div>
                 <div className="col-md-3">
-                  <h4>Autor</h4>
-                  <p>Aplikacja powstała na potrzeby bloga MissBerry.pl</p>
+                  <h4>Author</h4>
+                  <p>The application has been released as a tool for the blog missberry.pl. Designed and programmed by Jagoda Przybyla.</p>
                 </div>
                 <div className="col-md-3">
-                  <h4>Aplikacja</h4>
+                  <h4>Application</h4>
                   <ul>
-                    <li><a href="#">Rejestracja</a></li>
-                    <li><a href="#">Logowanie</a></li>
+                    <li><a href="#">Register</a></li>
+                    <li><a href="#">Log in</a></li>
                   </ul>
                 </div>
                 <div className="col-md-3">
-                  <h4>Kontakt</h4>
+                  <h4>Contact</h4>
                   <p>Blue Creative sp. z o.o</p>
                   <p>ul. Mielczarskiego 49/20</p>
                   <p>51-663 Wrocław</p>
