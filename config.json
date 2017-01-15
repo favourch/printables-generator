@@ -2,5 +2,10 @@
     "mongoDB" : "mongodb://designadmin:password@ds163677.mlab.com:63677/design",
     "googleFonts" : {
     	"apiKey" : "AIzaSyBCnpPf46kxGMsFE9pQG4Pu2YseRvnjPVE"
+    },
+    "cloudinary" : {
+    	"cloud_name": "bluecreative", 
+		  "api_key": "889448152855992", 
+		  "api_secret": "jlYMNntJd5Aqe3jOzxlhfo2H0SA" 
     }
 }

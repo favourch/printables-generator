@@ -5,9 +5,17 @@ import ProjectPreview from './infrastracture/ProjectPreview'
 
 class Browse extends Component {
 
-  state = {
-      designs: []
+  constructor(props) {
+    super(props)
+
+    this.state = {
+        designs: [],
+        keyword: ''
     }
+
+    this.searchDesigns = this.searchDesigns.bind(this)
+    this.changeValue = this.changeValue.bind(this)
+  }
 
 	componentDidMount() {
 
@@ -20,8 +28,37 @@ class Browse extends Component {
         console.log(response.data)
 			})
 			.catch(console.error);
-
 	}
+
+  searchDesigns() {
+
+    var data = {
+      keyword: this.state.keyword
+    }
+
+    console.log('search designs')
+
+    // Get designs by keyword
+    axios.post('/api/designs-by-keyword', data)
+      .then(response => {
+        this.setState({
+            designs: response.data
+        })
+        console.log('finished axios')
+        console.log(response.data)
+      })
+      .catch(console.error);
+
+    console.log('axios called')
+
+  }
+
+  changeValue(event) {
+    var value = event.target.value
+    this.setState({
+      keyword: value
+    }, this.searchDesigns())
+  }
 
   render() {
 
@@ -35,7 +72,7 @@ class Browse extends Component {
             <div className="row">
               <div className="col-md-6 col-md-offset-3 text-center">
                 <h2>Browse projects</h2>
-                <input type="text" className="form-control browse-search" placeholder="Search for something..." />
+                <input type="text" className="form-control browse-search" placeholder="Search for something..." value={this.state.keyword} onChange={this.changeValue} />
 
                 <div className="browse-filters">
                   <div className="tags">

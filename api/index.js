@@ -17,14 +17,33 @@ mongoose.Promise = Bluebird.Promise;
 import registerUser from './controllers/users/registerUser';
 import loginUser from './controllers/users/loginUser';
 import updateSettings from './controllers/users/updateSettings';
+import changeCoverPicture from './controllers/users/changeCoverPicture';
+import changeProfilePicture from './controllers/users/changeProfilePicture';
+import getAllUsers from './controllers/users/getAllUsers';
+import getTopUsers from './controllers/users/getTopUsers';
+import getUserByUsername from './controllers/users/getUserByUsername';
+
 import saveDesign from './controllers/designs/saveDesign';
 import deleteDesign from './controllers/designs/deleteDesign';
 import addDownload from './controllers/designs/addDownload';
+import getAllDesigns from './controllers/designs/getAllDesigns';
+import getDesignById from './controllers/designs/getDesignById';
+import getDesignPreviewById from './controllers/designs/getDesignPreviewById';
+import getDesignsByKeyword from './controllers/designs/getDesignsByKeyword';
+import getDesignsByUser from './controllers/designs/getDesignsByUser';
+import getTopDesigns from './controllers/designs/getTopDesigns';
 
 import { comparePassword } from './models/user';
 
 // Connect with mongoDB
 mongoose.connect(config.mongoDB, { server: { reconnectTries: 999999 } });
+
+// Setup cloudinary
+cloudinary.config({ 
+  cloud_name: config.cloudinary.cloud_name, 
+  api_key: config.cloudinary.api_key, 
+  api_secret: config.cloudinary.api_secret 
+});
 
 const router = express.Router();
 
@@ -32,81 +51,22 @@ router.get('/', (req, res) => {
 	res.send({ data: [] })
 })
 
-
-cloudinary.config({ 
-  cloud_name: 'bluecreative', 
-  api_key: '889448152855992', 
-  api_secret: 'jlYMNntJd5Aqe3jOzxlhfo2H0SA' 
-});
-
 // Get all users
 router.get('/users', (req, res) => {
-	User.find(function(err, users) {
-		res.send(users)
-	})
+	getAllUsers(req, res);
 })
 
-// Get all users
+// Get top users
 router.get('/top-users', (req, res) => {
-	User.find(function(err, users) {
-		res.send(users)
-	}).sort({'points': -1}).limit(6)
+	getTopUsers(req, res);
 })
 
-
-// Get user by id
+// Get user by username
 router.get('/users/:username', (req, res) => {
-	const username = req.params.username
-	User.findOne({ username: username }, function (err, response) {
-	  if (err) return console.error(err);
-	  res.send(response)
-	})
+	getUserByUsername(req, res);
 })
 
-// Get logged in user data
-router.get('/user/currentUser', (req, res) => {
-	if (req.user) {
-		res.send(req.user)
-	} else {
-		res.sendStatus(401)
-	}
-})
-
-// Update user settings
-router.post('/user/update-settings', (req, res) => {
-  updateSettings(req, res);
-})
-
-// Change user profile picture
-router.post('/user/upload-image', upload.single('file'), function (req, res, next) {
-	console.log('upload image userId', req.user._id)
-	console.log(req.file)
-	cloudinary.uploader.upload(
-		req.file.path, 
-		function(result) { 
-			console.log(result)
-			res.sendStatus(200) }, 
-	    { public_id: 'users/'+req.user._id })
-})
-
-// Change user cover photo
-router.post('/user/upload-cover', upload.single('file'), function (req, res, next) {
-	console.log('upload image userId', req.user._id)
-	console.log(req.file)
-	cloudinary.uploader.upload(
-		req.file.path, 
-		function(result) { 
-			console.log(result)
-			res.sendStatus(200) }, 
-	    { public_id: 'users/cover-'+req.user._id })
-})
-
-
-// Register new user
-router.post('/register', (req, res) => {
-  registerUser(req, res);
-})
-
+// Create new local strategy with passport
 passport.use(new LocalStrategy(
   function(username, password, done) {
   	User.findOne({ username: username }, function(err, user) {
@@ -138,6 +98,25 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+// Register new user
+router.post('/register', (req, res) => {
+  registerUser(req, res);
+})
+
+// Log in user using passport
+router.post('/login',
+  passport.authenticate('local'),
+  function(req, res) {
+    res.send(req.user)
+})
+
+// Logout user
+router.get('/logout', function(req, res) {
+    req.logout()
+    res.send(200)
+})
+
+// Check if the user is logged in
 router.get('/authenticate', function(req, res) {
     if (req.user) {
 			res.sendStatus(200)
@@ -147,15 +126,28 @@ router.get('/authenticate', function(req, res) {
     }
 })
 
-router.post('/login',
-  passport.authenticate('local'),
-  function(req, res) {
-    res.send(req.user)
+// Get authenticated user data
+router.get('/user/currentUser', (req, res) => {
+	if (req.user) {
+		res.send(req.user)
+	} else {
+		res.sendStatus(401)
+	}
 })
 
-router.get('/logout', function(req, res) {
-    req.logout()
-    res.send(200)
+// Update user settings
+router.post('/user/update-settings', (req, res) => {
+  updateSettings(req, res);
+})
+
+// Change user profile picture
+router.post('/user/upload-image', upload.single('file'), function (req, res, next) {
+	changeProfilePicture(req, res);
+})
+
+// Change user cover picture
+router.post('/user/upload-cover', upload.single('file'), function (req, res, next) {
+	changeCoverPicture(req, res);
 })
 
 // Save design
@@ -173,85 +165,34 @@ router.post('/design/add-download', (req, res) => {
   addDownload(req, res);
 })
 
-
 // Get all designs with author
 router.get('/designs', (req, res) => {
-
-	Design.find({}, 
-		'id title description authorId created likes downloads', 
-		function(err, designs) {
-		var newDesigns = []
-
-		designs.forEach(function(design) {
-			var authorId = design.authorId
-			User.findOne({ '_id': authorId }, '_id username firstName lastName points', function(err, author) {
-				design.author = author
-				newDesigns.push(design)
-
-				if (newDesigns.length === designs.length) {
-					newDesigns.sort(dynamicSort('-created'))
-					res.send(newDesigns)
-				}
-			})
-		})
-	}).sort({'created': -1})
-	// .limit(15)
+	getAllDesigns(req, res);
 })
 
+// Get all designs by keyword
+router.post('/designs-by-keyword', (req, res) => {
+	getDesignsByKeyword(req, res);
+})
 
+// Get top designs
 router.get('/top-designs', (req, res) => {
-	Design.find({}, 
-		'id title description authorId created likes downloads', 
-		function(err, designs) {
-		var newDesigns = []
-
-		designs.forEach(function(design) {
-			var authorId = design.authorId
-			User.findOne({ '_id': authorId }, '_id username firstName lastName points', function(err, author) {
-				design.author = author
-				newDesigns.push(design)
-
-				if (newDesigns.length === designs.length) {
-					newDesigns.sort(dynamicSort('-downloads'))
-					res.send(newDesigns)
-				}
-			})
-		})
-	}).sort({'downloads': -1}).limit(6)
+	getTopDesigns(req, res);
 })
 
 // Get designs by user
 router.get('/designs/user/:userId', (req, res) => {
-	const userId = req.params.userId;
-	Design.find({ 'authorId': userId }, function (err, designs) {
-	  if (err) return console.error(err);
-	  // console.log(designs)
-	  res.send(designs)
-	}).sort({'created': -1})
+	getDesignsByUser(req, res);
 })
 
 // Get design by id
 router.get('/design/:designId', (req, res) => {
-	const designId = req.params.designId
-	console.log('get design by id', designId)
-	Design.findOne({ _id: designId }, function (err, response) {
-	  if (err) return res.sendStatus(404);
-	  res.send(response)
-	})
+	getDesignById(req, res);
 })
 
 // Get design preview by id
 router.get('/preview-design/:designId', (req, res) => {
-	const designId = req.params.designId
-	console.log('get design preview by id', designId)
-	Design.findOne({ _id: designId }, function (err, response) {
-	  if (err) {
-	  	console.log('problem');
-	  	return res.sendStatus(404);
-	  }
-	  console.log('ok')
-	  res.send(response)
-	})
+	getDesignPreviewById(req, res);
 })
 
 
