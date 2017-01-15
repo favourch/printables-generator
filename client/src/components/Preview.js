@@ -46,13 +46,12 @@ class Preview extends Component {
       availableFonts: []
     }
 
-    this.changeValue = this.changeValue.bind(this)
-    this.changeOpenPanel = this.changeOpenPanel.bind(this)
     this.changeLabelName = this.changeLabelName.bind(this)
     this.zoomIn = this.zoomIn.bind(this)
     this.zoomOut = this.zoomOut.bind(this)
     this.deleteLabel = this.deleteLabel.bind(this)
     this.addLabel = this.addLabel.bind(this)
+    this.changeOpenPanel = this.changeOpenPanel.bind(this)
   }
 
 
@@ -89,7 +88,12 @@ class Preview extends Component {
   // Add label to the page
 
   addLabel() {
-    var id = this.state.labels.length + 1
+    var id = 1;
+    if (this.state.labels.length !== 0) {
+      var lastIndex = this.state.labels.length - 1
+      var lastLabel = this.state.labels[lastIndex]
+      id = lastLabel.id + 1
+    }
     var currentLabels = this.state.labels
     var newLabel = {
       id: id,
@@ -120,20 +124,8 @@ class Preview extends Component {
     })
   }
 
-  // Change state from input value
+  changeOpenPanel() {
 
-  changeValue(event) {
-    var design = this.state.design
-    var value = event.target.value
-    var parsed = parseInt(value, 10)
-    if (!isNaN(parsed)) {
-      design[event.target.name] = parsed
-    } else {
-      design[event.target.name] = value
-    }
-    this.setState({
-      design: design
-    })
   }
 
 
@@ -143,13 +135,6 @@ class Preview extends Component {
     window.print();
   }
 
-// Manualy change open panel in the sidebar
-
-  changeOpenPanel(activeKey) {
-    this.setState({ 
-      openPanel: activeKey 
-    })
-  }
 
 // Zoom functions
 
@@ -173,15 +158,18 @@ class Preview extends Component {
     }
   }
 
+// Delete label
+
   deleteLabel(id) {
-    console.log('DELETE LABEL')
-    console.log(id)
     var labels = this.state.labels
     for (var i = 0; i < labels.length; i++) {
         if(labels[i]['id'] === id) {
             labels.splice(i, 1);
         }
     }
+    this.setState({
+      labels: labels
+    })
   }
 
 
@@ -207,7 +195,6 @@ class Preview extends Component {
           <div className="pull-right">
             <button className="btn btn-primary" disabled><span className="lnr lnr-cloud-upload"></span> Save</button>
             <button className="btn btn-primary printButton" onClick={this.printDocument}><span className="lnr lnr-printer"></span>  Print</button>
-            <button className="btn btn-primary"><span className="lnr lnr-download"></span> Download</button>
           </div>
         </div>
 
@@ -223,8 +210,8 @@ class Preview extends Component {
                             name={label.name} 
                             design={this.state.design}
                             changeNameHandler={this.changeLabelName.bind(this, label.id)}
-                            openLabelPanel={() => this.changeOpenPanel('2')}
-                            openTextPanel={() => this.changeOpenPanel('4')}
+                            openLabelPanel={() => this.changeOpenPanel()}
+                            openTextPanel={() => this.changeOpenPanel()}
                             changeText={this.changeLabelName}
                             deleteLabel={this.deleteLabel}
                             >

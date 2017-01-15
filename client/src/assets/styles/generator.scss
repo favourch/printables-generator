@@ -156,6 +156,7 @@ a {
 	font-size: 12px;
 	color: #666;
 	padding-bottom: 30px;
+	padding-top: 30px;
 }
 
 .canvas-grid {
@@ -607,6 +608,7 @@ label {
 		bottom: 0px;
 		margin-bottom: 0px;
 		padding-bottom: 0px;
+		padding-top: 30px;
 	}
 
 	#add-label {
@@ -633,6 +635,13 @@ label {
 	.inner-label-text {
 		-webkit-print-color-adjust: exact;
         print-color-adjust: exact; /* Non-Webkit Browsers */
+	}
+
+	svg {
+		page-break-before: auto !important; /* 'always,' 'avoid,' 'left,' 'inherit,' or 'right' */
+	    page-break-after: auto !important; /* 'always,' 'avoid,' 'left,' 'inherit,' or 'right' */
+	    page-break-inside: avoid !important; /* or 'auto' */
+	    display: table-cell;
 	}
 
 }

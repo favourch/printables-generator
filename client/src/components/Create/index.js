@@ -105,22 +105,17 @@ class Create extends Component {
       })
     }
 
-    // // GET LIST OF GOOGLE FONTS
-    // axios.get('https://www.googleapis.com/webfonts/v1/webfonts?sort=popularity&key=AIzaSyBCnpPf46kxGMsFE9pQG4Pu2YseRvnjPVE')
-    //   .then(response => {
-    //     var fonts = response.data.items.slice(0,45)
-    //     this.setState({
-    //       availableFonts: fonts
-    //     })
-    //   })
-    //   .catch(console.error);
-
   }
 
   // Add label to the page
 
   addLabel() {
-    var id = this.state.labels.length + 1
+    var id = 1;
+    if (this.state.labels.length !== 0) {
+      var lastIndex = this.state.labels.length - 1
+      var lastLabel = this.state.labels[lastIndex]
+      id = lastLabel.id + 1
+    }
     var currentLabels = this.state.labels
     var newLabel = {
       id: id,
@@ -170,9 +165,6 @@ class Create extends Component {
   // Change font and import web font from google
 
   changeFont(font) {
-    console.log('change the font')
-    console.log(font)
-
     const design = this.state.design
     design.fontFamily = font
     this.setState({
@@ -306,15 +298,18 @@ class Create extends Component {
     }
   }
 
+// Delete label
+
   deleteLabel(id) {
-    console.log('DELETE LABEL')
-    console.log(id)
     var labels = this.state.labels
     for (var i = 0; i < labels.length; i++) {
         if(labels[i]['id'] === id) {
             labels.splice(i, 1);
         }
     }
+    this.setState({
+      labels: labels
+    })
   }
 
 // Border functions
@@ -473,7 +468,6 @@ class Create extends Component {
           <div className="pull-right">
             <button className="btn btn-primary" onClick={() => this.saveDesign()}><span className="lnr lnr-cloud-upload"></span> Save</button>
             <button className="btn btn-primary printButton" onClick={this.printDocument}><span className="lnr lnr-printer"></span>  Print</button>
-            <button className="btn btn-primary"><span className="lnr lnr-download"></span> Download</button>
           </div>
         </div>
 

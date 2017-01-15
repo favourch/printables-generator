@@ -44,13 +44,6 @@ class Pdf extends Component {
       availableFonts: []
     }
 
-    this.changeValue = this.changeValue.bind(this)
-    this.changeOpenPanel = this.changeOpenPanel.bind(this)
-    this.changeLabelName = this.changeLabelName.bind(this)
-    this.zoomIn = this.zoomIn.bind(this)
-    this.zoomOut = this.zoomOut.bind(this)
-    this.deleteLabel = this.deleteLabel.bind(this)
-    this.addLabel = this.addLabel.bind(this)
   }
 
 
@@ -84,56 +77,6 @@ class Pdf extends Component {
 
   }
 
-  // Add label to the page
-
-  addLabel() {
-    var id = this.state.labels.length + 1
-    var currentLabels = this.state.labels
-    var newLabel = {
-      id: id,
-      name: 'Title'
-    }
-    
-    currentLabels.push(newLabel)
-
-    this.setState({
-      labels: currentLabels
-    })
-  }
-
-  // Change label name
-
-  changeLabelName(id, event) {
-    var text = event.target.innerHTML
-    const { labels } = this.state
-    function findLabelById(label) { 
-        return label.id === id;
-    }
-    var focusLabel = labels.find(findLabelById)
-    var index = labels.indexOf(focusLabel)
-    focusLabel['name'] = text
-    labels[index] = focusLabel
-    this.setState({
-      labels: labels
-    })
-  }
-
-  // Change state from input value
-
-  changeValue(event) {
-    var design = this.state.design
-    var value = event.target.value
-    var parsed = parseInt(value, 10)
-    if (!isNaN(parsed)) {
-      design[event.target.name] = parsed
-    } else {
-      design[event.target.name] = value
-    }
-    this.setState({
-      design: design
-    })
-  }
-
 
 // Print document
 
@@ -141,46 +84,6 @@ class Pdf extends Component {
     window.print();
   }
 
-// Manualy change open panel in the sidebar
-
-  changeOpenPanel(activeKey) {
-    this.setState({ 
-      openPanel: activeKey 
-    })
-  }
-
-// Zoom functions
-
-  zoomIn() {
-    var current = this.state.zoom
-    var newZoom = current + 0.2
-    if (current < 1.3) {
-      this.setState({
-        zoom: newZoom
-      })
-    }
-  }
-
-  zoomOut() {
-    var current = this.state.zoom
-    var newZoom = current - 0.2
-    if (current > 0.9) {
-      this.setState({
-        zoom: newZoom
-      })
-    }
-  }
-
-  deleteLabel(id) {
-    console.log('DELETE LABEL')
-    console.log(id)
-    var labels = this.state.labels
-    for (var i = 0; i < labels.length; i++) {
-        if(labels[i]['id'] === id) {
-            labels.splice(i, 1);
-        }
-    }
-  }
 
 
   render() {
@@ -201,11 +104,6 @@ class Pdf extends Component {
                             id={label.id} 
                             name={label.name} 
                             design={this.state.design}
-                            changeNameHandler={this.changeLabelName.bind(this, label.id)}
-                            openLabelPanel={() => this.changeOpenPanel('2')}
-                            openTextPanel={() => this.changeOpenPanel('4')}
-                            changeText={this.changeLabelName}
-                            deleteLabel={this.deleteLabel}
                             editable={false}
                             >
                          </Label>

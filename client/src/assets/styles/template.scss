@@ -265,6 +265,17 @@ nav ul {
 	.btn {
 		margin: 0px 10px;
 		padding: 0px 30px;
+
+		&:hover {
+			color: #fff;
+		}
+	}
+}
+
+.btn-danger {
+	&:hover {
+		color: #fff;
+		background-color: #ac2925 !important;
 	}
 }
 
